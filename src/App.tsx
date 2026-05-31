@@ -5,6 +5,7 @@ import PageFooter from "./components/PageFooter";
 import NavBar from "./components/NavBar";
 import CodingProjects from "./pages/CodingProjects";
 import AdventureEngine from "./pages/AdventureEngine";
+import Home from "./pages/Home";
 import Blog from "./pages/Blog";
 import About from "./pages/About";
 
@@ -30,7 +31,7 @@ function App() {
             <Route path="/adventure-engine" element={<AdventureEngine />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/about" element={<About />} />
-            <Route path="/" element={<div>Home</div>} />
+            <Route path="/" element={<Home />} />
           </Routes>
         </main>
       </div>
