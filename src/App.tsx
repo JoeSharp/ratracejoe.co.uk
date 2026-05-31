@@ -1,13 +1,8 @@
 import React from "react";
 import { Route, Routes } from "react-router";
-import PageHeader from "./components/PageHeader";
 import PageFooter from "./components/PageFooter";
 import NavBar from "./components/NavBar";
-import CodingProjects from "./pages/CodingProjects";
-import AdventureEngine from "./pages/AdventureEngine";
-import Home from "./pages/Home";
-import Blog from "./pages/Blog";
-import About from "./pages/About";
+import PAGES from "./pages";
 
 function App() {
   const navRef = React.useRef<HTMLDivElement>(null);
@@ -26,11 +21,9 @@ function App() {
         <NavBar navRef={navRef} />
         <main className="content">
           <Routes>
-            <Route path="/coding-projects" element={<CodingProjects />} />
-            <Route path="/adventure-engine" element={<AdventureEngine />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/" element={<Home />} />
+            {PAGES.map(({ path, component }) => (
+              <Route path={path} element={component} />
+            ))}
           </Routes>
         </main>
       </div>

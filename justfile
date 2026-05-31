@@ -13,3 +13,6 @@ build: install
 
 build-ci: ci
     npm run build
+
+work:
+    echo "Calm down!"

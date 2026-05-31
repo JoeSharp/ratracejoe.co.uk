@@ -1,3 +1,4 @@
+import CompSciMaths from "./CompSciMaths";
 import SdqAnalysis from "./SdqAnalysis";
 
 function CodingProjects() {
@@ -9,6 +10,7 @@ function CodingProjects() {
         down my work laptop, open up my MacBook and just...keep going &#x1F604;
       </p>
       <SdqAnalysis />
+      <CompSciMaths />
     </main>
   );
 }

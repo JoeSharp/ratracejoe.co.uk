@@ -15,6 +15,11 @@ function About() {
         2019-20, working at Marling School from 2020-2022. I taught Computer
         Science as a specialist, and Maths to Year 7 and 8 as a non specialist
       </p>
+      <p>
+        I have also taught Salsa dancing for 17 years. I joined a class when I
+        started my first job and got totally hooked!
+      </p>
+      <p>I would recommend anyone learn some form of dancing.</p>
     </div>
   );
 }
