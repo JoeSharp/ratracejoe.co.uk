@@ -1,4 +1,5 @@
 import CompSciMaths from "./CompSciMaths";
+import OutreachLab from "./OutreachLab";
 import SdqAnalysis from "./SdqAnalysis";
 
 function CodingProjects() {
@@ -11,6 +12,7 @@ function CodingProjects() {
       </p>
       <SdqAnalysis />
       <CompSciMaths />
+      <OutreachLab />
     </main>
   );
 }
