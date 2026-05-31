@@ -9,7 +9,7 @@ type Props = {
 function NavBar({ navRef, onClose }: Props) {
   return (
     <nav className="sidebar" ref={navRef}>
-      <h2>Joe’s Site</h2>
+      <h2>Joe&apos;s Site</h2>
       <ul>
         {PAGES.map(({ name, path }) => (
           <li>
