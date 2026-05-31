@@ -1,7 +1,7 @@
 function SdqAnalysis() {
   return (
     <div>
-      <h3>SDQ Analysis</h3>
+      <h2>SDQ Analysis</h2>
       <p>
         This is a project where I analyze the Strengths and Difficulties
         Questionnaire (SDQ) data. The SDQ is a behavioral screening tool for

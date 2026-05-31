@@ -1,7 +1,7 @@
 function Home() {
   return (
     <div>
-      <h2>Welcome to my website!</h2>
+      <h1>Welcome to my website!</h1>
       <p>
         Welcome to my personal website! I'm Joe, a software developer with a
         passion for coding and music. This site is a place where I share my

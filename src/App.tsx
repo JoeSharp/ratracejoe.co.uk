@@ -25,7 +25,6 @@ function App() {
       <div className="layout">
         <NavBar navRef={navRef} />
         <main className="content">
-          <PageHeader />
           <Routes>
             <Route path="/coding-projects" element={<CodingProjects />} />
             <Route path="/adventure-engine" element={<AdventureEngine />} />
