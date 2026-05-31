@@ -1,7 +1,7 @@
 function CompSciMaths() {
   return (
     <article>
-      <h2>CompSciMaths</h2>
+      <h2>Comp Sci Maths</h2>
       <p>
         I was a school teacher for a couple of years, mostly teaching Computer
         Science but also KS3 Maths. In training for that, I created a website.

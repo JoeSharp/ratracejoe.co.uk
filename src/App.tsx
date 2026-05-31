@@ -18,7 +18,7 @@ function App() {
         ☰ Menu
       </button>
       <div className="layout">
-        <NavBar navRef={navRef} />
+        <NavBar navRef={navRef} onClose={onClickNavToggle} />
         <main className="content">
           <Routes>
             {PAGES.map(({ path, component }) => (

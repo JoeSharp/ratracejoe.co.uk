@@ -1,3 +1,5 @@
+@use "sass:color";
+
 // -----------------------------
 // Colour palette
 // -----------------------------
@@ -8,6 +10,7 @@ $accent-purple:  #7b5cff;
 $accent-blue:    #4da6ff;
 $text-main:      #e6e6f0;
 $text-muted:     #a8a8c0;
+$separator:      rgba(255,255,255,0.1);
 
 // Optional extras
 $border-light:   rgba(255,255,255,0.1);
@@ -29,6 +32,17 @@ body {
 .layout {
   display: flex;
   flex: 1; // This makes the content area expand
+}
+
+a {
+  color: $accent-blue;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a:hover {
+  color: color.scale($accent-blue, $lightness: 10%);
+  text-shadow: 0 0 10px color.scale($accent-blue, $lightness: 10%);
 }
 
 /* --- Footer --- */
@@ -94,7 +108,7 @@ body {
 .content {
   flex: 1;
   max-width: 700px;
-  padding: 2rem;
+  padding: 1rem;
   margin: 0 auto;
   box-sizing: border-box;
 }
@@ -128,4 +142,33 @@ body {
   .content {
     padding: 1.5rem;
   }
+}
+
+article, section {
+  border: 0;
+  border-top: 1px solid $separator;
+  margin: 2.5rem 0;
+}
+
+// Experimental things
+.highlighted-box {
+  background: $bg-card;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.indented-content {
+  border-left: 4px solid $accent-purple;
+  padding-left: 1rem;
+  margin: 2rem 0;
+}
+
+.card {
+  padding: 1.5rem;
+  margin: 2rem 0;
+  background: $bg-card;
+  border: 1px solid $border-light;
+  border-radius: 8px;
 }
