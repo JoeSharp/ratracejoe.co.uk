@@ -60,7 +60,7 @@ class Chain {
     const index = this.blocks.get(currentId);
     if (!index) {
       throw new Error(
-        "Could not find internal block representation for given next id"
+        "Could not find internal block representation for given next id",
       );
     }
 
@@ -68,7 +68,7 @@ class Chain {
       return [chainSoFar];
     }
     return [...index.nextBlockIds].flatMap((nextId) =>
-      this._recurseChains(nextId, [...chainSoFar, nextId])
+      this._recurseChains(nextId, [...chainSoFar, nextId]),
     );
   }
 
@@ -79,6 +79,7 @@ class Chain {
    */
   consolidateChains() {
     const longestChain = this.getLongestChain();
+    if (!longestChain) return;
 
     // If the longest chain is not long enough to cause a pull, return now
     if (longestChain.length <= this.longChainPull) {
@@ -91,6 +92,7 @@ class Chain {
     // Clean out the 'next block ids' for all the points behind our consolidation point
     chainToConsolidate
       .map((blockId) => this.blocks.get(blockId))
+      .filter((d) => d !== undefined)
       .forEach(({ nextBlockIds }, index) => {
         const nextIdToKeep = longestChain[index + 1];
         [...nextBlockIds]

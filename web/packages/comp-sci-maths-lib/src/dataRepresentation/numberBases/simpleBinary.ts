@@ -24,6 +24,7 @@ export const boolToBin = (v: Optional<boolean>): string => {
   if (v === undefined) return "-";
   if (v === true) return "1";
   if (v === false) return "0";
+  return "-";
 };
 export const binToBool = (v: string) => v === "1";
 

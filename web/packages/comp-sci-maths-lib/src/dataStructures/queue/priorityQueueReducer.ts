@@ -4,7 +4,6 @@ import {
   linkedListReducer,
   linkedListGet,
   linkedListTraverse,
-  undefined,
 } from "../linkedList/linkedListReducer";
 import {
   DEFAULT_CAPACITY,
@@ -56,6 +55,7 @@ export const priorityQueueEnqueue = <T>(
   const newPrioritisedItem: PrioritisedItem<T> = { value: newItem, priority };
 
   linkedListTraverse(state, (item, logicalIndex) => {
+    if (item === undefined) return false;
     // Should we insert ahead of this one?
     if (item.value.priority < priority) {
       insertIndex = logicalIndex;

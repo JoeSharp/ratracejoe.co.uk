@@ -29,12 +29,12 @@ interface RepeatTestCase {
 }
 
 describe("Hack ASM Test Scripts", () => {
-  test('Load All', () => {
-    expect(parseLoadAllInstruction('load,')).toBeTruthy();
-    expect(parseLoadAllInstruction('load;')).toBeTruthy();
-    expect(parseLoadAllInstruction('  load,')).toBeTruthy();
-    expect(parseLoadAllInstruction('  load;  ')).toBeTruthy();
-  })
+  test("Load All", () => {
+    expect(parseLoadAllInstruction("load,")).toBeTruthy();
+    expect(parseLoadAllInstruction("load;")).toBeTruthy();
+    expect(parseLoadAllInstruction("  load,")).toBeTruthy();
+    expect(parseLoadAllInstruction("  load;  ")).toBeTruthy();
+  });
 
   test("Tick Tock", () => {
     expect(parseTickTockInstruction("   ticktock;")).toBeTruthy();
@@ -63,7 +63,7 @@ describe("Hack ASM Test Scripts", () => {
       const result = parseRepeatStart(input, 0);
       if (!!expectedCount) {
         expect(result).toBeDefined();
-        expect(result.count).toBe(expectedCount);
+        expect(result?.count).toBe(expectedCount);
       } else {
         expect(result).toBeUndefined();
       }
@@ -84,7 +84,7 @@ describe("Hack ASM Test Scripts", () => {
         type: CpuTestInstructionType.setNamedRegisterIndex,
         lineContent: "set RAM[0] 4,   // Set test arguments",
         lineNumber: 0,
-        registerName: 'RAM',
+        registerName: "RAM",
         index: 0,
         value: 4,
       },
@@ -95,7 +95,7 @@ describe("Hack ASM Test Scripts", () => {
         type: CpuTestInstructionType.setNamedRegisterIndex,
         lineContent: "set RAM[1] 78,",
         lineNumber: 0,
-        registerName: 'RAM',
+        registerName: "RAM",
         index: 1,
         value: 78,
       },
@@ -107,7 +107,7 @@ describe("Hack ASM Test Scripts", () => {
         lineContent:
           "set RAM[2] -1;  // Test that program initialized product to 0",
         lineNumber: 0,
-        registerName: 'RAM',
+        registerName: "RAM",
         index: 2,
         value: -1,
       },
@@ -117,21 +117,21 @@ describe("Hack ASM Test Scripts", () => {
     test(`Set RAM - ${input}`, () => {
       const result = parseSetNamedRegisterAtIndex(input, 0);
       expect(result).toBeDefined();
-      expect(result.registerName).toBe(expected.registerName);
-      expect(result.index).toBe(expected.index);
-      expect(result.value).toBe(expected.value);
-      expect(result.lineContent).toBe(expected.lineContent);
-      expect(result.lineNumber).toBe(expected.lineNumber);
+      expect(result?.registerName).toBe(expected.registerName);
+      expect(result?.index).toBe(expected.index);
+      expect(result?.value).toBe(expected.value);
+      expect(result?.lineContent).toBe(expected.lineContent);
+      expect(result?.lineNumber).toBe(expected.lineNumber);
     });
   });
 
-  test('Load Mult File', () => {
-    const f = parseRequiredFile('load Mult.asm,', 'load');
-    expect(f).toBe('Mult.asm');
-  })
+  test("Load Mult File", () => {
+    const f = parseRequiredFile("load Mult.asm,", "load");
+    expect(f).toBe("Mult.asm");
+  });
 
   test("ASM Test Script (Mult)", () => {
-    const data = nand2tetrisFileLoader('04/mult', 'Mult.tst');
+    const data = nand2tetrisFileLoader("04/mult", "Mult.tst");
 
     const testScript = parseTestScript(data);
 
@@ -167,10 +167,13 @@ describe("Hack ASM Test Scripts", () => {
       instruction: CpuTestInstruction,
       expectedRegisterName: string,
       expectedAddress: number,
-      expectedValue: number
+      expectedValue: number,
     ) => {
-      expect(instruction.type).toBe(CpuTestInstructionType.setNamedRegisterIndex);
-      const { registerName, index, value } = instruction as CpuTestSetNamedRegisterAtIndex;
+      expect(instruction.type).toBe(
+        CpuTestInstructionType.setNamedRegisterIndex,
+      );
+      const { registerName, index, value } =
+        instruction as CpuTestSetNamedRegisterAtIndex;
       expect(registerName).toBe(expectedRegisterName);
       expect(index).toBe(expectedAddress);
       expect(value).toBe(expectedValue);
@@ -178,7 +181,7 @@ describe("Hack ASM Test Scripts", () => {
     const expectRepeat = (
       instruction: CpuTestInstruction,
       expectedCount: number,
-      furtherAssertions: (repeatInstruction: CpuTestRepeat) => void
+      furtherAssertions: (repeatInstruction: CpuTestRepeat) => void,
     ) => {
       expect(instruction.type).toBe(CpuTestInstructionType.repeat);
       const repeatInstruction = instruction as CpuTestRepeat;
@@ -193,32 +196,38 @@ describe("Hack ASM Test Scripts", () => {
       expect(instruction.type).toBe(CpuTestInstructionType.output);
     };
 
-    expectSetRam(testScript.testInstructions[1], 'RAM', 0, 0);
-    expectSetRam(testScript.testInstructions[2], 'RAM', 1, 0);
-    expectSetRam(testScript.testInstructions[3], 'RAM', 16, -1);
+    expectSetRam(testScript.testInstructions[1], "RAM", 0, 0);
+    expectSetRam(testScript.testInstructions[2], "RAM", 1, 0);
+    expectSetRam(testScript.testInstructions[3], "RAM", 16, -1);
     expectRepeat(testScript.testInstructions[4], 20, (r) => {
       expect(r.instructions.length).toBe(1);
       expectTickTockInstruction(r.instructions[0]);
     });
 
-    expectSetRam(testScript.testInstructions[5], 'RAM', 0, 0);
-    expectSetRam(testScript.testInstructions[6], 'RAM', 1, 0);
+    expectSetRam(testScript.testInstructions[5], "RAM", 0, 0);
+    expectSetRam(testScript.testInstructions[6], "RAM", 1, 0);
     expectOutputInstruction(testScript.testInstructions[7]);
   });
 
-  test('VM Test Script BasicVME', () => {
-    const data = nand2tetrisFileLoader('07/MemoryAccess/BasicTest', 'BasicTestVME.tst');
+  test("VM Test Script BasicVME", () => {
+    const data = nand2tetrisFileLoader(
+      "07/MemoryAccess/BasicTest",
+      "BasicTestVME.tst",
+    );
 
     const testScript = parseTestScript(data);
 
-    expect(testScript.testInstructions)
-  })
+    expect(testScript.testInstructions);
+  });
 
-  test('VM Test Script StaticVME', () => {
-    const data = nand2tetrisFileLoader('08/FunctionCalls/StaticsTest', 'StaticsTestVME.tst');
+  test("VM Test Script StaticVME", () => {
+    const data = nand2tetrisFileLoader(
+      "08/FunctionCalls/StaticsTest",
+      "StaticsTestVME.tst",
+    );
 
     const testScript = parseTestScript(data);
 
-    expect(testScript.testInstructions)
-  })
+    expect(testScript.testInstructions);
+  });
 });
