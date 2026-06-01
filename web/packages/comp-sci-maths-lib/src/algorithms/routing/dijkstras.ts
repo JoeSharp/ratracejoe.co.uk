@@ -1,7 +1,7 @@
 import {
   priorityQueueEnqueue,
   priorityQueueDequeue,
-  getInitialPriorityQueueState
+  getInitialPriorityQueueState,
 } from "../../dataStructures/queue/priorityQueueReducer";
 import { Graph, getOutgoing } from "../../dataStructures/graph/graphReducer";
 import {
@@ -14,7 +14,10 @@ import {
   EdgeCurrentWeightCalcType,
 } from "./types";
 import { emptyObserver } from "../../common";
-import { isListEmpty, linkedListRemoveMatch } from "../../dataStructures/linkedList/linkedListReducer";
+import {
+  isListEmpty,
+  linkedListRemoveMatch,
+} from "../../dataStructures/linkedList/linkedListReducer";
 
 /**
  * Calls the walkPath generator function and puts all the nodes into an array, returns the array.
@@ -23,11 +26,7 @@ import { isListEmpty, linkedListRemoveMatch } from "../../dataStructures/linkedL
  * @param {string} destinationNode
  * @returns An array containing the path (walking backwards), it will be empty if no route was found
  */
-function getPathTo({
-  graph,
-  shortestPathTree,
-  node,
-}: WalkPath) {
+function getPathTo({ graph, shortestPathTree, node }: WalkPath) {
   const path: string[] = [];
 
   // If there is no available path to the destination, feed back empty list
@@ -56,17 +55,14 @@ interface WalkPath {
  * @param {string} viaNode The start point of the journey
  * @param {string} destinationNode The end point of the journey
  */
-function* walkPath({
-  shortestPathTree,
-  node,
-}: WalkPath) {
+function* walkPath({ shortestPathTree, node }: WalkPath) {
   while (!!node) {
     yield node;
     const thisShortestPath: ShortestPathForNode = shortestPathTree[node];
     if (thisShortestPath === undefined) {
       break;
     }
-    node = thisShortestPath.viaNode;
+    node = thisShortestPath.viaNode!;
   }
 }
 
@@ -113,19 +109,33 @@ function dijkstras({
 
   // Build a priority queue, where the nodes are arranged in order of
   // distance from the source (smallest to largest)
-  let currentDistances = getInitialPriorityQueueState<ShortestPathWithNode>(graph.vertices.length);
+  let currentDistances = getInitialPriorityQueueState<ShortestPathWithNode>(
+    graph.vertices.length,
+  );
 
   // Add the 'from' node, it doesn't go via anything, and it's distance is zero
-  currentDistances = priorityQueueEnqueue(currentDistances, {
-    node: sourceNode,
-    viaNode: undefined,
-    cost: 0,
-  }, Infinity);
+  currentDistances = priorityQueueEnqueue(
+    currentDistances,
+    {
+      node: sourceNode,
+      viaNode: undefined,
+      cost: 0,
+    },
+    Infinity,
+  );
 
   // Add all the other nodes, with a distance of Infinity
   currentDistances = graph.vertices
     .filter((node) => node !== sourceNode)
-    .reduce((acc, node) => priorityQueueEnqueue(acc, { node, viaNode: undefined, cost: Infinity }, 0), currentDistances);
+    .reduce(
+      (acc, node) =>
+        priorityQueueEnqueue(
+          acc,
+          { node, viaNode: undefined, cost: Infinity },
+          0,
+        ),
+      currentDistances,
+    );
 
   // Give the observer the START
   observer({ shortestPathTree, currentDistances, outgoing: [] });
@@ -134,7 +144,7 @@ function dijkstras({
   while (!isListEmpty(currentDistances)) {
     // Take the node that is the shortest distance from our source node
     currentDistances = priorityQueueDequeue(currentDistances);
-    const { lastResult: { value: { value: currentItem } } } = currentDistances;
+    const currentItem = currentDistances.lastResult?.value.value!;
 
     // Work out what amendments to make to the priority queue
     const outgoing: EdgeWithCost[] = getOutgoing(graph, currentItem.node)
@@ -146,8 +156,12 @@ function dijkstras({
 
         // Remove the matching item from our current known distances
         // It will either be replaced as is, or replaced with updated details
-        currentDistances = linkedListRemoveMatch(currentDistances, (d) => d.value.node === node);
-        const { lastResult: { value: { value: otherItem, priority: otherPriority } } } = currentDistances;
+        currentDistances = linkedListRemoveMatch(
+          currentDistances,
+          (d) => d.value.node === node,
+        );
+        const otherItem = currentDistances.lastResult?.value.value!;
+        const otherPriority = currentDistances.lastResult?.value.priority!;
 
         // What is the distance to this other node, from our current node?
         const newPotentialDistance =
@@ -157,17 +171,24 @@ function dijkstras({
         if (newPotentialDistance < otherItem.cost) {
           totalCost = newPotentialDistance;
           // Replace the node with our new distance and via details
-          currentDistances = priorityQueueEnqueue(currentDistances,
+          currentDistances = priorityQueueEnqueue(
+            currentDistances,
             {
-              node, cost: newPotentialDistance,
-              viaNode: currentItem.node
-            }, 1 / newPotentialDistance);
+              node,
+              cost: newPotentialDistance,
+              viaNode: currentItem.node,
+            },
+            1 / newPotentialDistance,
+          );
           calcResult = EdgeCurrentWeightCalcType.shorterRouteFound;
         } else {
           totalCost = otherItem.cost;
           // Just put the current one back
-          currentDistances = priorityQueueEnqueue(currentDistances,
-            otherItem, otherPriority)
+          currentDistances = priorityQueueEnqueue(
+            currentDistances,
+            otherItem,
+            otherPriority,
+          );
           calcResult = EdgeCurrentWeightCalcType.existingRouteStillQuickest;
         }
 
@@ -183,11 +204,11 @@ function dijkstras({
     // Put this item into our set (using node as a key)
     shortestPathTree[currentItem.node] = {
       cost: currentItem.cost,
-      viaNode: currentItem.viaNode
+      viaNode: currentItem.viaNode,
     };
 
     // Have we reached the destination? Quit early
-    if (!!destinationNode && (currentItem.node === destinationNode)) {
+    if (!!destinationNode && currentItem.node === destinationNode) {
       break;
     }
   }

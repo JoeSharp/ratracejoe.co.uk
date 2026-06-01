@@ -14,14 +14,17 @@ import {
  * Given a factory for a linear data structure, this function returns
  * a function which can then be used for traversing a graph.
  */
-const graphTraversal =
-  (
-    getInitialState: Producer<LinearStructureState<string>>,
-    reducer: LinearDataStructureReducer<string, LinearStructureState<string>>,
-  ) =>
-  (graph: Graph, startingVertex: string, visit: VisitFunction<string>) => {
+function graphTraversal<T extends LinearStructureState<any>>(
+  getInitialState: Producer<T>,
+  reducer: LinearDataStructureReducer<string, T>,
+) {
+  return function (
+    graph: Graph,
+    startingVertex: string,
+    visit: VisitFunction<string>,
+  ) {
     const visited: string[] = [];
-    let visitDataStructure: LinearStructureState<string> = getInitialState();
+    let visitDataStructure: T = getInitialState();
     visitDataStructure = reducer(visitDataStructure, {
       type: "push",
       value: startingVertex,
@@ -46,5 +49,6 @@ const graphTraversal =
         );
     }
   };
+}
 
 export default graphTraversal;
