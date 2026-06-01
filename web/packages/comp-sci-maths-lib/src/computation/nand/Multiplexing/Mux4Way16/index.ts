@@ -1,1 +1,0 @@
-export { default } from './Mux4Way16'

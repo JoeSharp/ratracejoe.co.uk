@@ -17,9 +17,9 @@ build-lib:
 build-site: 
     npm run build -w ratracejoe.co.uk
 
-build: install build-site
+build: install build-lib build-site
 
-build-ci: ci build-site
+build-ci: ci build-lib build-site
 
 work:
     echo "Calm down!"

@@ -43,18 +43,12 @@ import {
 import { dijkstras, getPathTo, walkPath } from "./algorithms/routing/dijkstras";
 import binarySearch from "./algorithms/search/binarySearch";
 import linearSearch from "./algorithms/search/linearSearch";
-import { HackCpu, HackCpuTestRunner, RAMSimulator } from "./computation/assemblyLanguage";
-import { HackVm, HackVmTestRunner } from "./computation/virtualMachine";
-import chipFactory from "./computation/nand/chipFactory";
-import Chip from "./computation/nand/Chip";
-import Clock from "./computation/nand/Clock";
-import BinaryBus from "./computation/nand/BinaryBus";
-import BinaryPin from "./computation/nand/BinaryPin";
-import NandTestRunner from "./computation/nand/NandTestScript/NandTestRunner";
 
 export {
   // Data Structures
-  Graph, Edge, GraphAction,
+  Graph,
+  Edge,
+  GraphAction,
   Stack,
   stackReducer,
   Queue,
@@ -104,19 +98,6 @@ export {
   // Compression, Hashing Etc
   DictionaryEncoder,
   RunLengthEncoder,
-  // Computation
-  HackCpu,
-  HackCpuTestRunner,
-  RAMSimulator,
-  HackVm,
-  HackVmTestRunner,
-  // Nand
-  NandTestRunner,
-  BinaryBus,
-  BinaryPin,
-  Chip,
-  Clock,
-  chipFactory,
   // Fun
-  GameOfLife
+  GameOfLife,
 };
