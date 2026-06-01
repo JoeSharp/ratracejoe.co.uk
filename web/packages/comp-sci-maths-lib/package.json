@@ -17,7 +17,6 @@
     "typescript": "6.0"
   },
   "dependencies": {
-    "lorem-ipsum": "^3.0.0",
-    "uuid": "^8.3.2"
+    "lorem-ipsum": "^3.0.0"
   }
 }

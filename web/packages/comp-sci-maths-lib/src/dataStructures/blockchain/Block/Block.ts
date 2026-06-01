@@ -1,6 +1,6 @@
 import MerkleTree from "../MerkleTree/MerkleTree";
 import { generateSha256 } from "../MerkleTree/generateHash";
-import { v4 as uuid } from "uuid";
+import { randomUUID } from "crypto";
 
 export const INITIAL_HASH = "FEFIFOFUM";
 export const INITIAL_ID = "00000000-0000-0000-0000-000000000000";
@@ -24,10 +24,10 @@ class Block {
   constructor(
     blockNumber: number = FIRST_BLOCK_NUMBER,
     previousHash: string = INITIAL_HASH,
-    previousId: string = INITIAL_ID
+    previousId: string = INITIAL_ID,
   ) {
     this.blockNumber = blockNumber;
-    this.id = uuid();
+    this.id = randomUUID();
     this.nonce = 0;
     this.previousHash = previousHash;
     this.previousId = previousId;
@@ -38,7 +38,7 @@ class Block {
   createNextBlock(): Block {
     if (this.hash === NO_HASH) {
       throw new Error(
-        "Cannot create next block before this one has been minted"
+        "Cannot create next block before this one has been minted",
       );
     }
 

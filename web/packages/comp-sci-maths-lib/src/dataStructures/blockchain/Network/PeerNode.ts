@@ -6,7 +6,7 @@ import {
   sign,
   verify,
 } from "crypto";
-import { v4 as uuid } from "uuid";
+import { randomUUID } from "crypto";
 import InMemoryNetworkNode from "../Network/InMemoryNetworkNode";
 import Message from "../Network/Message";
 
@@ -15,7 +15,7 @@ const ENCRYPTION_PADDING = constants.RSA_PKCS1_OAEP_PADDING;
 const SIGNING_PADDING = constants.RSA_PKCS1_PSS_PADDING;
 
 export function createPeerNode(): Promise<PeerNode> {
-  const passphrase = uuid().toString();
+  const passphrase = randomUUID().toString();
 
   return new Promise((resolve, reject) => {
     generateKeyPair(
@@ -54,7 +54,7 @@ class PeerNode {
   others: Map<string, string>;
 
   constructor(publicKey: string, privateKey: string, passphrase: string) {
-    this.id = uuid();
+    this.id = randomUUID();
     this.networkNode = new InMemoryNetworkNode(this.id);
     this.publicKey = publicKey;
     this.privateKey = privateKey;
