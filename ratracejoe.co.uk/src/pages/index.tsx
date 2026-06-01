@@ -4,7 +4,7 @@ import CodingProjects from "./CodingProjects";
 import AdventureEngine from "./AdventureEngine";
 import About from "./About";
 
-type Page = {
+export type Page = {
   component: React.ReactNode;
   path: string;
   name: string;

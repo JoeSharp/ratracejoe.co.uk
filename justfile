@@ -1,18 +1,18 @@
 # Run the development server for the website
 install:
-    npm install
+    npm install --prefix ./ratracejoe.co.uk
 
 run: install
-    npm run dev
+    npm run dev --prefix ./ratracejoe.co.uk
 
 ci:
-    npm ci
+    npm ci --prefix ./ratracejoe.co.uk
 
 build: install
-    npm run build
+    npm run build --prefix ./ratracejoe.co.uk
 
 build-ci: ci
-    npm run build
+    npm run build --prefix ./ratracejoe.co.uk
 
 work:
     echo "Calm down!"
