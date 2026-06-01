@@ -40,20 +40,20 @@ export default class Queue<T>
     return this;
   }
 
-  pop(): Optional<T> {
+  pop(): T {
     if (this.isEmpty()) {
       throw new Error("Queue Empty");
     }
 
     this.tickVersion();
-    return this.items.remove(0);
+    return this.items.remove(0)!;
   }
 
-  peek(): Optional<T> {
+  peek(): T {
     if (this.isEmpty()) {
       throw new Error("Queue Empty");
     }
 
-    return this.items.get(0);
+    return this.items.get(0)!;
   }
 }

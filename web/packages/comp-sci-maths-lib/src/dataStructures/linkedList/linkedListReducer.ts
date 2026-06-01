@@ -171,7 +171,7 @@ export const linkedListGetStoreIndex = <T>(
   } else {
     // Just pull an item off the stack
     freeNodes = stackPop(freeNodes);
-    newPhysicalIndex = freeNodes?.lastResult || undefined;
+    newPhysicalIndex = freeNodes?.lastResult;
   }
 
   return {
@@ -320,7 +320,6 @@ export const linkedListInsert = <T>(
     value,
     nextPtr: undefined,
   };
-
   // Find somewhere to put the new item
   const { newPhysicalIndex, nextFree, freeNodes } =
     linkedListGetStoreIndex(state);

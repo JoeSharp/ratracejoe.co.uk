@@ -23,7 +23,7 @@ describe("Priority Queue", () => {
       priority: 7,
     });
     state = priorityQueueReducer(state, { type: "dequeue" });
-    const { lastResult: a } = state; // Indigo
+    const a = state.lastResult?.value; // Indigo
     state = priorityQueueReducer(state, {
       type: "enqueue",
       value: "Tom",
@@ -35,28 +35,28 @@ describe("Priority Queue", () => {
       priority: 3,
     });
     state = priorityQueueReducer(state, { type: "dequeue" });
-    const { lastResult: b } = state; // Tom
+    const b = state.lastResult?.value; // Tom
     state = priorityQueueReducer(state, {
       type: "enqueue",
       value: "Nina",
       priority: 4,
     });
     state = priorityQueueReducer(state, { type: "dequeue" });
-    const { lastResult: c } = state; // Kate
+    const c = state.lastResult?.value; // Kate
     state = priorityQueueReducer(state, {
       type: "enqueue",
       value: "Gaz",
       priority: 5,
     });
     state = priorityQueueReducer(state, { type: "dequeue" });
-    const { lastResult: d } = state; // Gaz
+    const d = state.lastResult?.value; // Gaz
     state = priorityQueueReducer(state, {
       type: "enqueue",
       value: "Steve",
       priority: 2,
     });
     state = priorityQueueReducer(state, { type: "dequeue" });
-    const { lastResult: e } = state; // Joe
+    const e = state.lastResult?.value; // Joe
     state = priorityQueueReducer(state, {
       type: "enqueue",
       value: "Louise",
@@ -68,11 +68,13 @@ describe("Priority Queue", () => {
       priority: 7,
     });
     state = priorityQueueReducer(state, { type: "dequeue" });
-    const { lastResult: f } = state; // Louise
+    const f = state.lastResult?.value; // Louise
+
     state = priorityQueueReducer(state, { type: "dequeue" });
-    const { lastResult: g } = state; // Chris
+
+    const g = state.lastResult?.value; // Chris
     state = priorityQueueReducer(state, { type: "dequeue" });
-    const { lastResult: h } = state; // Nina
+    const h = state.lastResult?.value; // Nina
 
     state = priorityQueueReducer(state, {
       type: "enqueue",
@@ -86,25 +88,25 @@ describe("Priority Queue", () => {
     });
 
     state = priorityQueueReducer(state, { type: "dequeue" });
-    const { lastResult: i } = state; // Jenny
+    const i = state.lastResult?.value; // Jenny
     state = priorityQueueReducer(state, { type: "dequeue" });
-    const { lastResult: j } = state; // Kirsten
+    const j = state.lastResult?.value; // Kirsten
     state = priorityQueueReducer(state, { type: "dequeue" });
-    const { lastResult: k } = state; // Steve
+    const k = state.lastResult?.value; // Steve
     state = priorityQueueReducer(state, { type: "dequeue" });
-    const { lastResult: l } = state; // Nick
+    const l = state.lastResult?.value; // Nick
 
-    expect(a?.value).toEqual({ value: "Indigo", priority: 10 });
-    expect(b?.value).toEqual({ value: "Tom", priority: 9 });
-    expect(c?.value).toEqual({ value: "Kate", priority: 7 });
-    expect(d?.value).toEqual({ value: "Gaz", priority: 5 });
-    expect(e?.value).toEqual({ value: "Joe", priority: 4 });
-    expect(f?.value).toEqual({ value: "Louise", priority: 8 });
-    expect(g?.value).toEqual({ value: "Chris", priority: 7 });
-    expect(h?.value).toEqual({ value: "Nina", priority: 4 });
-    expect(i?.value).toEqual({ value: "Jenny", priority: 12 });
-    expect(j?.value).toEqual({ value: "Kirsten", priority: 3 });
-    expect(k?.value).toEqual({ value: "Steve", priority: 2 });
-    expect(l?.value).toEqual({ value: "Nick", priority: 1 });
+    expect(a).toEqual({ value: "Indigo", priority: 10 });
+    expect(b).toEqual({ value: "Tom", priority: 9 });
+    expect(c).toEqual({ value: "Kate", priority: 7 });
+    expect(d).toEqual({ value: "Gaz", priority: 5 });
+    expect(e).toEqual({ value: "Joe", priority: 4 });
+    expect(f).toEqual({ value: "Louise", priority: 8 });
+    expect(g).toEqual({ value: "Chris", priority: 7 });
+    expect(h).toEqual({ value: "Nina", priority: 4 });
+    expect(i).toEqual({ value: "Jenny", priority: 12 });
+    expect(j).toEqual({ value: "Kirsten", priority: 3 });
+    expect(k).toEqual({ value: "Steve", priority: 2 });
+    expect(l).toEqual({ value: "Nick", priority: 1 });
   });
 });

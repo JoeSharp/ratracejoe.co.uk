@@ -79,6 +79,21 @@ describe("Linked List (Functional)", () => {
     expect(itemsGotIndividually).toStrictEqual(["Joe", "Indigo", "Kirsten"]);
   });
 
+  test.only("Insert into zero", () => {
+    let myList = getInitialLinkedListState();
+
+    myList = linkedListReducer(myList, { type: "append", value: "Joe" }); // Joe
+    myList = linkedListReducer(myList, { type: "append", value: "Kate" }); // Joe, Kate
+    myList = linkedListReducer(myList, {
+      type: "insert",
+      logicalIndex: 0,
+      value: "Tom",
+    }); // Tom, Joe, Kate
+
+    const asArr = linkedListGetAll(myList);
+    expect(asArr).toEqual(["Tom", "Joe", "Kate"]);
+  });
+
   test("All Usages", () => {
     let myList = getInitialLinkedListState();
 
