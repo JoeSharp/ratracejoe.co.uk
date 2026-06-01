@@ -1,18 +1,25 @@
 # Run the development server for the website
 install:
-    npm install --prefix ./web
+    npm install 
 
 run: install
-    npm run dev --prefix ./web/packages/ratracejoe.co.uk
+    npm run dev -w ratracejoe.co.uk
 
 ci:
-    npm ci --prefix ./web/packages/ratracejoe.co.uk
+    npm ci 
 
-build: install
-    npm run build --prefix ./web/packages/ratracejoe.co.uk
+test-lib: install
+    npm test -w @joe/comp-sci-maths maths
 
-build-ci: ci
-    npm run build --prefix ./web/packages/ratracejoe.co.uk
+build-lib: 
+    npm run build -w @joe/comp-sci-maths
+
+build-site: 
+    npm run build -w ratracejoe.co.uk
+
+build: install build-site
+
+build-ci: ci build-site
 
 work:
     echo "Calm down!"

@@ -1,0 +1,22 @@
+{
+  "name": "@joe/comp-sci-maths",
+  "description": "Collection of Algorithms and Data Structures Learnt During Secondary Education in Computer Science and Maths",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "@types/jest": "^30.0.0",
+    "jest": "^30.4.2",
+    "ts-jest": "^29.4.11",
+    "typescript": "6.0"
+  },
+  "dependencies": {
+    "uuid": "^14.0.0"
+  }
+}
