@@ -1,5 +1,17 @@
 @use "variables";
 
+.nav-toggle {
+  display: none;
+  background: variables.$bg-card;
+  color: variables.$text-main;
+  border: none;
+  padding: 1rem;
+  width: 100%;
+  text-align: left;
+  font-size: 1.2rem;
+  z-index: 20;
+}
+
 .sidebar {
   width: 220px;
   background: variables.$bg-card;
