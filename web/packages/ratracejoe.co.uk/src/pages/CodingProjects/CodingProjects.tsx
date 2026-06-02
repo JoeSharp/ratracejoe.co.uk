@@ -1,4 +1,4 @@
-import CompSciMaths from "./CompSciMaths";
+import CompSciMathsProject from "./CompSciMathsProject";
 import OutreachLab from "./OutreachLab";
 import SdqAnalysis from "./SdqAnalysis";
 import SportsDay from "./SportsDay";
@@ -12,7 +12,7 @@ function CodingProjects() {
         down my work laptop, open up my MacBook and just...keep going &#x1F604;
       </p>
       <SdqAnalysis />
-      <CompSciMaths />
+      <CompSciMathsProject />
       <OutreachLab />
       <SportsDay />
     </main>

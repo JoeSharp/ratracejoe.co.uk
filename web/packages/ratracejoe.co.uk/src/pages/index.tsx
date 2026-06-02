@@ -2,6 +2,7 @@ import Home from "./Home";
 import Blog from "./Blog";
 import CodingProjects from "./CodingProjects";
 import AdventureEngine from "./AdventureEngine";
+import Teaching from "./Teaching";
 import About from "./About";
 
 export type Page = {
@@ -25,6 +26,11 @@ const PAGES: Page[] = [
     component: <CodingProjects />,
     path: "/coding-projects",
     name: "Coding Projects",
+  },
+  {
+    component: <Teaching />,
+    path: "/teaching",
+    name: "Teaching",
   },
   {
     component: <AdventureEngine />,

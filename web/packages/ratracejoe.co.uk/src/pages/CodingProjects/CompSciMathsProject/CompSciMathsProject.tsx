@@ -1,4 +1,4 @@
-function CompSciMaths() {
+function CompSciMathsProject() {
   return (
     <article>
       <h2>Comp Sci Maths</h2>
@@ -20,8 +20,17 @@ function CompSciMaths() {
         that they understood what the inputs/outputs needed to be.
       </p>
       <a href="https://github.com/JoeSharp/comp-sci-maths">GitHub Repository</a>
+      <p>
+        I am dusting off the code to integrate into this website, and wow has it
+        aged!
+      </p>
+      <p>
+        Upgrading from TypeScript 4.x to 6.x is involving a lot more strictness.
+        Upgrading from React from 2019 to modern Vite is clearly also going to
+        be quite a task.
+      </p>
     </article>
   );
 }
 
-export default CompSciMaths;
+export default CompSciMathsProject;

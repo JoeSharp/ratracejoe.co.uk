@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@joe/comp-sci-maths": "file:../comp-sci-maths-lib",
+    "p5": "^2.3.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "react-router": "^7.16.0"
@@ -20,6 +22,7 @@
     "@rolldown/plugin-babel": "^0.2.3",
     "@types/babel__core": "^7.20.5",
     "@types/node": "^24.12.3",
+    "@types/p5": "^1.7.7",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",

@@ -2,14 +2,15 @@ import ArticleDate from "../ArticleDate";
 
 type Props = {
   date: Date;
+  title: string;
   content: string;
 };
 
-function BlogPost({ date, content }: Props) {
+function BlogPost({ title, date, content }: Props) {
   return (
     <article>
       <ArticleDate date={date} />
-      <h3>The Indie Web </h3>
+      <h3>{title}</h3>
       <p>{content}</p>
     </article>
   );
