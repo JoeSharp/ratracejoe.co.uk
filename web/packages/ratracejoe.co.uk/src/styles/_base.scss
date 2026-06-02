@@ -18,3 +18,9 @@ a:hover {
   color: color.scale(variables.$accent-blue, $lightness: 10%);
   text-shadow: 0 0 10px color.scale(variables.$accent-blue, $lightness: 10%);
 }
+
+article,
+section {
+  border-top: 1px solid variables.$separator;
+  margin: 2.5rem 0;
+}

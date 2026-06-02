@@ -1,11 +1,18 @@
 @use "sass:color";
 
-$bg-dark:        #0d0b1e;
-$bg-card:        #1c1a2e;
-$accent-purple:  #7b5cff;
-$accent-blue:    #4da6ff;
-$text-main:      #e6e6f0;
-$text-muted:     #a8a8c0;
-$separator:      rgba(255,255,255,0.1);
-$border-light:   rgba(255,255,255,0.1);
-$shadow-soft:    0 0 20px rgba(0,0,0,0.3);
+$bp-mobile: 700px;
+$bg-dark: #0d0b1e;
+$bg-card: #1c1a2e;
+$accent-purple: #7b5cff;
+$accent-blue: #4da6ff;
+$text-main: #e6e6f0;
+$text-muted: #a8a8c0;
+$separator: rgba(255, 255, 255, 0.1);
+$border-light: rgba(255, 255, 255, 0.1);
+$shadow-soft: 0 0 20px rgba(0, 0, 0, 0.3);
+
+@mixin mobile {
+  @media (max-width: $bp-mobile) {
+    @content;
+  }
+}
