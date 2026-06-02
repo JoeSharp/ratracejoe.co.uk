@@ -1,4 +1,4 @@
-import { CircleDemo } from "./CircleDemo";
+import SvgDemo from "./SvgDemo";
 
 function Teaching() {
   return (
@@ -9,10 +9,13 @@ function Teaching() {
         set of resources to bring the Computer Science A Level to life.
       </p>
       <p>
-        I have a huge amount of code to uplift, but for now, here is me trying
-        to rework my p5.js sketch wrapper.
+        Previously I used p5.js for the drawing, but there is quite a bit
+        impedance mismatch between p5.js and React. The effectively fight over
+        control. I'm going to write entirely new code to render all the
+        algorithms, but use SVG and drive it directly from React using things
+        like `requestAnimationFrame`.
       </p>
-      <CircleDemo />
+      <SvgDemo />
     </div>
   );
 }
