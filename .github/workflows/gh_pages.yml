@@ -26,6 +26,12 @@ jobs:
         with:
           node-version: 24
 
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install wasm-pack
+        run: cargo install wasm-pack
+
       - name: Install just
         run: sudo apt-get update && sudo apt-get install -y just
 
