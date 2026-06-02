@@ -1,0 +1,20 @@
+@use "variables";
+@use "sass:color";
+
+body {
+  margin: 0;
+  background: variables.$bg-dark;
+  color: variables.$text-main;
+  font-family: system-ui, sans-serif;
+}
+
+a {
+  color: variables.$accent-blue;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a:hover {
+  color: color.scale(variables.$accent-blue, $lightness: 10%);
+  text-shadow: 0 0 10px color.scale(variables.$accent-blue, $lightness: 10%);
+}

@@ -1,0 +1,25 @@
+@use "variables";
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.layout {
+  display: flex;
+  flex: 1;
+}
+
+.content {
+  flex: 1;
+  max-width: 700px;
+  padding: 1rem;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+article, section {
+  border-top: 1px solid variables.$separator;
+  margin: 2.5rem 0;
+}

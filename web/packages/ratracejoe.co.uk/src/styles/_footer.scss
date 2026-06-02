@@ -1,0 +1,9 @@
+@use "variables";
+
+.footer {
+  text-align: center;
+  padding: 1rem;
+  color: variables.$text-muted;
+  background: variables.$bg-card;
+  border-top: 1px solid variables.$border-light;
+}
