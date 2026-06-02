@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router";
 import PageFooter from "./components/PageFooter";
 import NavBar from "./components/NavBar";
 import PAGES from "./pages";
+import init, { greet } from "@joe/wasm-hello";
 
 function App() {
   const navRef = React.useRef<HTMLDivElement>(null);
@@ -12,6 +13,11 @@ function App() {
       sidebar.classList.toggle("open");
     }
   };
+  React.useEffect(() => {
+    init().then(() => {
+      console.log(greet("Joe"));
+    });
+  }, []);
   return (
     <div className="page">
       <button className="nav-toggle" onClick={onClickNavToggle}>

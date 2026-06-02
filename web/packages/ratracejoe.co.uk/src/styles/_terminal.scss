@@ -1,0 +1,36 @@
+@use "variables";
+
+.terminal {
+  background: transparent;
+  color: variables.$text-main;
+  font-family: "Fira Mono", monospace;
+  padding: 1rem;
+  border-radius: 8px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+.terminal-output {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 0.5rem;
+}
+
+.terminal-line {
+  white-space: pre-wrap;
+  margin: 0.2rem 0;
+}
+
+.terminal-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.5rem;
+  color: #e6e6f0;
+  font-family: inherit;
+  font-size: 1rem;
+  outline: none;
+}

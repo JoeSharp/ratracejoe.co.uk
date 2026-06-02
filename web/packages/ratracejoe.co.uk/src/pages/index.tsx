@@ -1,7 +1,6 @@
 import Home from "./Home";
 import Blog from "./Blog";
 import CodingProjects from "./CodingProjects";
-import AdventureEngine from "./AdventureEngine";
 import Teaching from "./Teaching";
 import About from "./About";
 
@@ -31,11 +30,6 @@ const PAGES: Page[] = [
     component: <Teaching />,
     path: "/teaching",
     name: "Teaching",
-  },
-  {
-    component: <AdventureEngine />,
-    path: "/adventure-engine",
-    name: "Adventure Engine",
   },
   {
     component: <About />,

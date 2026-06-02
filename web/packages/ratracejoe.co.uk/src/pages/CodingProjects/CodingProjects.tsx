@@ -1,3 +1,4 @@
+import AdventureEngine from "./AdventureEngine";
 import CompSciMathsProject from "./CompSciMathsProject";
 import OutreachLab from "./OutreachLab";
 import SdqAnalysis from "./SdqAnalysis";
@@ -15,6 +16,7 @@ function CodingProjects() {
       <CompSciMathsProject />
       <OutreachLab />
       <SportsDay />
+      <AdventureEngine />
     </main>
   );
 }

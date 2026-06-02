@@ -13,7 +13,7 @@ function NavBar({ navRef, onClose, pages }: Props) {
       <h2>Joe&apos;s Site</h2>
       <ul>
         {pages.map(({ name, path }) => (
-          <li>
+          <li key={name}>
             <Link to={path} onClick={onClose}>
               {name}
             </Link>

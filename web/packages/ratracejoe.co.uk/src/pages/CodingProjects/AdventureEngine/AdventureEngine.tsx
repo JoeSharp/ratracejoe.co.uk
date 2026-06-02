@@ -1,7 +1,9 @@
+import { Terminal } from "../../../components/Terminal";
+
 function AdventureEngine() {
   return (
     <div>
-      <h1>Adventure Engine</h1>
+      <h2>Adventure Engine</h2>
       <p>
         When learning a new programming language, one good method is to simply
         create a project and build it up, learning as you go along.
@@ -18,6 +20,7 @@ function AdventureEngine() {
         Within this website, I would like to experiment with Web Assembly, and
         embed Rust games into my site.
       </p>
+      <Terminal />
     </div>
   );
 }

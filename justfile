@@ -2,7 +2,7 @@
 install:
     npm install 
 
-run: install
+run: build-hello-wasm install
     npm run dev -w ratracejoe.co.uk
 
 ci:
@@ -17,9 +17,16 @@ build-lib:
 build-site: 
     npm run build -w ratracejoe.co.uk
 
-build: install build-lib build-site
+build-hello-wasm:
+    cd web/packages/wasm-hello && wasm-pack build --target web --out-dir pkg
 
-build-ci: ci build-lib build-site
+build: install build-hello-wasm build-lib build-site
+
+build-ci: ci build-hello-wasm build-lib build-site
 
 work:
     echo "Calm down!"
+
+dev-tools:
+    rustup target add wasm32-unknown-unknown
+    cargo install wasm-pack
