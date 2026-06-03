@@ -1,3 +1,4 @@
+import type { RouteObject } from "react-router";
 import Home from "./pages/Home";
 import Blog from "./pages/Blog";
 import CodingProjects from "./pages/CodingProjects";
@@ -10,7 +11,11 @@ import SdqAnalysis from "./pages/CodingProjects/SdqAnalysis";
 import SportsDay from "./pages/CodingProjects/SportsDay";
 import App from "./App";
 
-export const ROUTES = [
+export type NavHandle = {
+  navSection: string;
+};
+
+export const ROUTES: RouteObject[] = [
   {
     path: "/",
     element: <App />,

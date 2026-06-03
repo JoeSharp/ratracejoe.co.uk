@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useMatches } from "react-router";
+import type { NavHandle } from "../routes";
 
 type Props = {
   navRef: React.RefObject<HTMLElement | null>;
@@ -7,7 +8,7 @@ type Props = {
 };
 
 function NavBar({ navRef, onClose }: Props) {
-  const matches = useMatches();
+  const matches = useMatches() as Array<{ handle?: NavHandle }>;
   const activeSections = matches
     .map((m) => m.handle?.navSection)
     .filter(Boolean);
