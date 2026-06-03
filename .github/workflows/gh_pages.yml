@@ -63,11 +63,11 @@ jobs:
       - uses: actions/configure-pages@v4
 
       - name: Create SPA fallback
-        run: cp web/packages/ratracejoe.co.uk/dist/index.html web/packages/ratracejoe.co.uk/dist/404.html
+        run: cp packages/ratracejoe.co.uk/dist/index.html packages/ratracejoe.co.uk/dist/404.html
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: web/packages/ratracejoe.co.uk/dist
+          path: packages/ratracejoe.co.uk/dist
 
   deploy:
     runs-on: ubuntu-latest
