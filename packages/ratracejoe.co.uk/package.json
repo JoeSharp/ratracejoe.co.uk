@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "@joe/comp-sci-maths": "file:../comp-sci-maths-lib",
+    "@joe/rust-gaming-wasm": "file:../rust-gaming-wasm/pkg",
     "@joe/wasm-hello": "file:../wasm-hello/pkg",
+    "lorem-ipsum": "^3.0.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "react-router": "^7.16.0"

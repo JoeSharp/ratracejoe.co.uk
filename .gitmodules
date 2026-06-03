@@ -1,0 +1,4 @@
+[submodule "external/rust-gaming"]
+	path = external/rust-gaming
+	url = https://github.com/JoeSharp/rust-gaming
+	branch = main

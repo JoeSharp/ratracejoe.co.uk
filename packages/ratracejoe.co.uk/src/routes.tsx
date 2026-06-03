@@ -10,6 +10,7 @@ import OutreachLab from "./pages/CodingProjects/OutreachLab";
 import SdqAnalysis from "./pages/CodingProjects/SdqAnalysis";
 import SportsDay from "./pages/CodingProjects/SportsDay";
 import App from "./App";
+import GoBoard from "./pages/CodingProjects/GoBoard";
 
 export type NavHandle = {
   navSection: string;
@@ -57,6 +58,10 @@ export const ROUTES: RouteObject[] = [
           {
             path: "adventure-engine",
             element: <AdventureEngine />,
+          },
+          {
+            path: "go-board",
+            element: <GoBoard />,
           },
         ],
       },

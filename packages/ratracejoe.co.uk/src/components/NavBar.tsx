@@ -55,6 +55,11 @@ function NavBar({ navRef, onClose }: Props) {
               </Link>
             </li>
             <li>
+              <Link to="/coding-projects/go-board" onClick={onClose}>
+                Go Board Game
+              </Link>
+            </li>
+            <li>
               <Link to="/coding-projects/sports-day" onClick={onClose}>
                 Sports Day
               </Link>
