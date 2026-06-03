@@ -1,8 +1,7 @@
 import React from "react";
-import { Route, Routes } from "react-router";
+import { Outlet } from "react-router";
 import PageFooter from "./components/PageFooter";
 import NavBar from "./components/NavBar";
-import PAGES from "./pages";
 import init, { greet } from "@joe/wasm-hello";
 
 function App() {
@@ -24,13 +23,9 @@ function App() {
         ☰ Menu
       </button>
       <div className="layout">
-        <NavBar pages={PAGES} navRef={navRef} onClose={onClickNavToggle} />
+        <NavBar navRef={navRef} onClose={onClickNavToggle} />
         <main className="content">
-          <Routes>
-            {PAGES.map(({ path, component }) => (
-              <Route path={path} element={component} />
-            ))}
-          </Routes>
+          <Outlet />
         </main>
       </div>
       <PageFooter />

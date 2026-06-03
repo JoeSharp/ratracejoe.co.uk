@@ -47,6 +47,20 @@
     }
   }
 
+  .subnav {
+    padding-left: 0.75rem;
+    border-left: 2px solid variables.$accent-purple;
+    display: flex;
+    flex-direction: column;
+
+    /* smooth open/close animation */
+    transition: max-height 0.25s ease;
+
+    &.collapsed {
+      display: none;
+    }
+  }
+
   @include variables.mobile {
     width: 100%;
     border-right: none;

@@ -1,6 +1,6 @@
 function SportsDay() {
   return (
-    <article>
+    <main>
       <h2>Sports Day</h2>
       <p>
         During my time teaching, I observed how manually intensive the
@@ -29,7 +29,7 @@ function SportsDay() {
         my work projects.
       </p>
       <a href="https://github.com/JoeSharp/sports-day">GitHub Repository</a>
-    </article>
+    </main>
   );
 }
 

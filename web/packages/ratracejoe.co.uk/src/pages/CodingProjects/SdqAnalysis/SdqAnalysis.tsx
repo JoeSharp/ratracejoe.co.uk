@@ -1,6 +1,6 @@
 function SdqAnalysis() {
   return (
-    <article>
+    <main>
       <h2>SDQ Analysis</h2>
       <p>
         This is a project where I analyze the Strengths and Difficulties
@@ -15,7 +15,7 @@ function SdqAnalysis() {
       >
         GitHub Repository
       </a>
-    </article>
+    </main>
   );
 }
 

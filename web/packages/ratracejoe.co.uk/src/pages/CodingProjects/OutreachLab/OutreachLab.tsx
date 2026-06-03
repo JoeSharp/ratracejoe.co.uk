@@ -1,6 +1,6 @@
 function OutreachLab() {
   return (
-    <article>
+    <main>
       <h2>Outreach Lab</h2>
       <p>
         I continue to visit schools to teach programming. Usually school
@@ -18,7 +18,7 @@ function OutreachLab() {
         students.
       </p>
       <a href="https://github.com/JoeSharp/outreach-lab">GitHub Repository</a>
-    </article>
+    </main>
   );
 }
 export default OutreachLab;

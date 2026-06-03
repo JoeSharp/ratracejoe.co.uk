@@ -1,6 +1,6 @@
 function CompSciMathsProject() {
   return (
-    <article>
+    <main>
       <h2>Comp Sci Maths</h2>
       <p>
         I was a school teacher for a couple of years, mostly teaching Computer
@@ -29,7 +29,7 @@ function CompSciMathsProject() {
         Upgrading from React from 2019 to modern Vite is clearly also going to
         be quite a task.
       </p>
-    </article>
+    </main>
   );
 }
 

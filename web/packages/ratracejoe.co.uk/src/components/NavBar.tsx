@@ -1,24 +1,75 @@
-import { Link } from "react-router";
-import { type Page } from "../pages";
+import React from "react";
+import { Link, useMatches } from "react-router";
 
 type Props = {
-  pages: Page[];
   navRef: React.RefObject<HTMLElement | null>;
   onClose: () => void;
 };
 
-function NavBar({ navRef, onClose, pages }: Props) {
+function NavBar({ navRef, onClose }: Props) {
+  const matches = useMatches();
+  const activeSections = matches
+    .map((m) => m.handle?.navSection)
+    .filter(Boolean);
+
   return (
     <nav className="sidebar" ref={navRef}>
       <h2>Joe&apos;s Site</h2>
       <ul>
-        {pages.map(({ name, path }) => (
-          <li key={name}>
-            <Link to={path} onClick={onClose}>
-              {name}
-            </Link>
-          </li>
-        ))}
+        <li>
+          <Link to="/" onClick={onClose}>
+            Home
+          </Link>
+        </li>
+        <li>
+          <Link to="/blog" onClick={onClose}>
+            Blog
+          </Link>
+        </li>
+        <li>
+          <Link to="/coding-projects" onClick={onClose}>
+            Coding Projects
+          </Link>
+          <ul
+            className={`subnav ${!activeSections.includes("Coding Projects") && "collapsed"}`}
+          >
+            <li>
+              <Link to="/coding-projects/sdq" onClick={onClose}>
+                SDQ
+              </Link>
+            </li>
+            <li>
+              <Link to="/coding-projects/outreach-lab" onClick={onClose}>
+                Outreach Lab
+              </Link>
+            </li>
+            <li>
+              <Link to="/coding-projects/comp-sci-maths" onClick={onClose}>
+                Comp Sci Maths
+              </Link>
+            </li>
+            <li>
+              <Link to="/coding-projects/adventure-engine" onClick={onClose}>
+                Adventure Engine
+              </Link>
+            </li>
+            <li>
+              <Link to="/coding-projects/sports-day" onClick={onClose}>
+                Sports Day
+              </Link>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <Link to="/teaching" onClick={onClose}>
+            Teaching
+          </Link>
+        </li>
+        <li>
+          <Link to="/about" onClick={onClose}>
+            About
+          </Link>
+        </li>
       </ul>
     </nav>
   );
