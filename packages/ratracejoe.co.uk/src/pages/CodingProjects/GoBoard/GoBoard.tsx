@@ -7,7 +7,6 @@ function GoBoard() {
   React.useEffect(() => {
     getWasmGo().then((e) => {
       wasmGoRef.current = e;
-      console.log("Inside useEffec", e);
     });
   });
   const [boardStr, setBoardStr] = React.useState<string>();

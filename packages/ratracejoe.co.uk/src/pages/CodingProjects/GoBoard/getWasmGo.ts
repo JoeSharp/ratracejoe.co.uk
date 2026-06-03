@@ -7,7 +7,6 @@ async function getWasmGo(): Promise<WasmGo> {
 
   await init();
   wasmGo = new WasmGo();
-  console.log("WASM go inside fn", wasmGo);
   return wasmGo;
 }
 
