@@ -31,7 +31,7 @@ function RatsNest() {
     const ratImg = new Image();
     ratImg.src = ratHead;
 
-    const rats = Array.from({ length: 50 }, () => ({
+    const rats = Array.from({ length: NUMBER_RATS }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
       vx: (Math.random() - 0.5) * 2,
