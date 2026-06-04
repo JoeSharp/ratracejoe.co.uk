@@ -2,6 +2,7 @@ import React from "react";
 import { Outlet } from "react-router";
 import PageFooter from "./components/PageFooter";
 import NavBar from "./components/NavBar";
+import RatsNest from "./components/RatNest";
 
 function App() {
   const navRef = React.useRef<HTMLDivElement>(null);
@@ -17,6 +18,7 @@ function App() {
         ☰ Menu
       </button>
       <div className="layout">
+        <RatsNest />
         <NavBar navRef={navRef} onClose={onClickNavToggle} />
         <main className="content">
           <Outlet />

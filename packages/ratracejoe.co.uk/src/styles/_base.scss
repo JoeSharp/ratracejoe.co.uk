@@ -24,3 +24,11 @@ section {
   border-top: 1px solid variables.$separator;
   margin: 2.5rem 0;
 }
+
+.background {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 30%;
+}
