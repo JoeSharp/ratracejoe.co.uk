@@ -1,8 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { WasmAdventureEngine } from "@joe/rust-gaming-wasm";
-import getEngine from "./getEngine";
-
-//const engine = await getEngine();
+import getEngine from "../wasm/getAdventureEngine";
 
 export function Terminal() {
   const [lines, setLines] = useState<string[]>([
@@ -12,6 +10,10 @@ export function Terminal() {
   const [input, setInput] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
   const engineRef = useRef<WasmAdventureEngine>(null);
+
+  const onInputChange: React.ChangeEventHandler<HTMLInputElement> = ({
+    target: { value },
+  }) => setInput(value);
 
   useEffect(() => {
     getEngine().then((e) => {
@@ -23,7 +25,7 @@ export function Terminal() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [lines]);
 
-  function handleSubmit(e: React.FormEvent) {
+  const onSubmit: React.SubmitEventHandler = (e) => {
     if (!engineRef.current) return;
 
     e.preventDefault();
@@ -32,11 +34,10 @@ export function Terminal() {
     if (!cmd) return;
 
     const response = engineRef.current.process(cmd);
-    //const response = engine.process(cmd);
 
     setLines((prev) => [...prev, `> ${cmd}`, response]);
     setInput("");
-  }
+  };
 
   return (
     <div className="terminal">
@@ -49,11 +50,11 @@ export function Terminal() {
         <div ref={bottomRef} />
       </div>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={onSubmit}>
         <input
           className="terminal-input"
           value={input}
-          onChange={(e) => setInput(e.target.value)}
+          onChange={onInputChange}
           autoFocus
         />
       </form>
