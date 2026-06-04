@@ -1,12 +1,12 @@
-import init, { Engine } from "@joe/wasm-hello";
+import init, { WasmAdventureEngine } from "@joe/rust-gaming-wasm";
 
-let engine: Engine | null = null;
+let engine: WasmAdventureEngine | null = null;
 
-async function getEngine(): Promise<Engine> {
+async function getEngine(): Promise<WasmAdventureEngine> {
   if (engine) return engine;
 
   await init();
-  engine = new Engine();
+  engine = new WasmAdventureEngine();
   return engine;
 }
 

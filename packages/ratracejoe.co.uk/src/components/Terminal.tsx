@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Engine } from "@joe/wasm-hello";
+import { WasmAdventureEngine } from "@joe/rust-gaming-wasm";
 import getEngine from "./getEngine";
 
 //const engine = await getEngine();
@@ -11,7 +11,7 @@ export function Terminal() {
   ]);
   const [input, setInput] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
-  const engineRef = useRef<Engine>(null);
+  const engineRef = useRef<WasmAdventureEngine>(null);
 
   useEffect(() => {
     getEngine().then((e) => {
