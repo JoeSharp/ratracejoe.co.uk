@@ -23,8 +23,8 @@ function NavBar({ navRef, onClose }: Props) {
           </Link>
         </li>
         <li>
-          <Link to="/blog" onClick={onClose}>
-            Blog
+          <Link to="/dev-diary" onClick={onClose}>
+            Dev Diary
           </Link>
         </li>
         <li>
@@ -69,6 +69,11 @@ function NavBar({ navRef, onClose }: Props) {
         <li>
           <Link to="/teaching" onClick={onClose}>
             Teaching
+          </Link>
+        </li>
+        <li>
+          <Link to="/external-links" onClick={onClose}>
+            External Links
           </Link>
         </li>
         <li>

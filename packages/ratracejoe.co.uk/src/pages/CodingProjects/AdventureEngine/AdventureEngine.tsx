@@ -2,7 +2,7 @@ import { Terminal } from "../../../components/Terminal";
 
 function AdventureEngine() {
   return (
-    <main>
+    <div>
       <h2>Adventure Engine</h2>
       <p>
         When learning a new programming language, one good method is to simply
@@ -21,7 +21,7 @@ function AdventureEngine() {
         embed Rust games into my site.
       </p>
       <Terminal />
-    </main>
+    </div>
   );
 }
 

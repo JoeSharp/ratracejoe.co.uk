@@ -1,6 +1,5 @@
 import type { RouteObject } from "react-router";
 import Home from "./pages/Home";
-import Blog from "./pages/Blog";
 import CodingProjects from "./pages/CodingProjects";
 import Teaching from "./pages/Teaching";
 import About from "./pages/About";
@@ -11,9 +10,19 @@ import SdqAnalysis from "./pages/CodingProjects/SdqAnalysis";
 import SportsDay from "./pages/CodingProjects/SportsDay";
 import App from "./App";
 import GoBoard from "./pages/CodingProjects/GoBoard";
+import ExternalLinks from "./pages/ExternalLinks";
+import DevDiary from "./pages/DevDiary";
+
+export type NAV_SECTION =
+  | "Home"
+  | "Blog"
+  | "Coding Projects"
+  | "Teaching"
+  | "External Links"
+  | "About";
 
 export type NavHandle = {
-  navSection: string;
+  navSection: NAV_SECTION;
 };
 
 export const ROUTES: RouteObject[] = [
@@ -27,9 +36,9 @@ export const ROUTES: RouteObject[] = [
         handle: { navSection: "Home" },
       },
       {
-        path: "/blog",
-        element: <Blog />,
-        handle: { navSection: "Blog" },
+        path: "/dev-diary",
+        element: <DevDiary />,
+        handle: { navSection: "Dev Diary" },
       },
       {
         path: "/coding-projects",
@@ -69,6 +78,11 @@ export const ROUTES: RouteObject[] = [
         path: "/teaching",
         element: <Teaching />,
         handle: { navSection: "Teaching" },
+      },
+      {
+        path: "/external-links",
+        element: <ExternalLinks />,
+        handle: { navSection: "External Links" },
       },
       {
         path: "/about",

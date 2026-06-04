@@ -18,11 +18,13 @@ function App() {
         ☰ Menu
       </button>
       <div className="layout">
-        <RatsNest />
         <NavBar navRef={navRef} onClose={onClickNavToggle} />
-        <main className="content">
-          <Outlet />
-        </main>
+        <div className="content-wrapper">
+          <RatsNest />
+          <main className="content">
+            <Outlet />
+          </main>
+        </div>
       </div>
       <PageFooter />
     </div>

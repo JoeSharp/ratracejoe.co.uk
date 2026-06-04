@@ -1,19 +1,19 @@
+import React from "react";
 import ArticleDate from "../ArticleDate";
 
-type Props = {
+type Props = React.PropsWithChildren & {
   date: Date;
   title: string;
-  content: string;
 };
 
-function BlogPost({ title, date, content }: Props) {
+function DevDiaryPost({ title, date, children }: Props) {
   return (
     <article>
       <ArticleDate date={date} />
       <h3>{title}</h3>
-      <p>{content}</p>
+      {children}
     </article>
   );
 }
 
-export default BlogPost;
+export default DevDiaryPost;

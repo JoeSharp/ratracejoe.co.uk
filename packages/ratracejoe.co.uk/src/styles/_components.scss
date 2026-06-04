@@ -22,4 +22,11 @@
   background: variables.$bg-card;
   border: 1px solid variables.$border-light;
   border-radius: 8px;
+  max-width: 15rem;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
 }
