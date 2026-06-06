@@ -7,6 +7,7 @@ import AdventureEngine from "./pages/CodingProjects/AdventureEngine";
 import CompSciMathsProject from "./pages/CodingProjects/CompSciMathsProject";
 import OutreachLab from "./pages/CodingProjects/OutreachLab";
 import SdqAnalysis from "./pages/CodingProjects/SdqAnalysis";
+import GameOfLife from "./pages/CodingProjects/GameOfLife";
 import SportsDay from "./pages/CodingProjects/SportsDay";
 import App from "./App";
 import GoBoard from "./pages/CodingProjects/GoGame";
@@ -63,6 +64,10 @@ export const ROUTES: RouteObject[] = [
           {
             path: "sports-day",
             element: <SportsDay />,
+          },
+          {
+            path: "game-of-life",
+            element: <GameOfLife />,
           },
           {
             path: "adventure-engine",

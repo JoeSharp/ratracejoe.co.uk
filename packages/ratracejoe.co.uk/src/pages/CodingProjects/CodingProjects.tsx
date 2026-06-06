@@ -1,3 +1,5 @@
+import CodingProjectsNav from "../../components/NavBar/CodingProjectsNav";
+
 function CodingProjects() {
   return (
     <div>
@@ -7,7 +9,7 @@ function CodingProjects() {
         down my work laptop, open up my MacBook and just...keep going &#x1F604;
       </p>
       <a href="https://github.com/JoeSharp">My GitHub</a>
-      <p>My key projects are listed in the nav bar.</p>
+      <CodingProjectsNav />
     </div>
   );
 }

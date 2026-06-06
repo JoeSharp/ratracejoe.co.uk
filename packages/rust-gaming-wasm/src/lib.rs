@@ -1,6 +1,128 @@
 use adventure_engine::AdventureState;
+use game_of_life::GameOfLife;
+use game_of_life::GolCell;
 use go::{GoBoard, LastMove};
+use std::cell::RefCell;
+use std::rc::Rc;
+use wasm_bindgen::JsCast;
 use wasm_bindgen::prelude::*;
+use web_sys::{CanvasRenderingContext2d, HtmlCanvasElement, window};
+
+#[wasm_bindgen]
+pub fn draw_rect(canvas: HtmlCanvasElement) {
+    let ctx = canvas
+        .get_context("2d")
+        .unwrap()
+        .unwrap()
+        .dyn_into::<CanvasRenderingContext2d>()
+        .unwrap();
+
+    ctx.set_fill_style_str(&"#00f");
+    ctx.fill_rect(10.0, 10.0, 100.0, 100.0);
+}
+
+#[wasm_bindgen]
+pub struct Animator {
+    canvas: HtmlCanvasElement,
+    ctx: CanvasRenderingContext2d,
+    game_of_life: GameOfLife,
+    last_frame_time: f64,
+    target_frame_time: f64,
+}
+
+#[wasm_bindgen]
+impl Animator {
+    #[wasm_bindgen(constructor)]
+    pub fn new(canvas: HtmlCanvasElement) -> Animator {
+        const GOL_GUN: &str = "---------------------------------------
+-------------------------x-------------
+-----------------------x-x-------------
+-------------xx------xx------------xx--
+------------x---x----xx------------xx--
+-xx--------x-----x---xx----------------
+-xx--------x---x-xx----x-x-------------
+-----------x-----x-------x-------------
+------------x---x----------------------
+-------------xx------------------------
+---------------------------------------
+";
+
+        let ctx = canvas
+            .get_context("2d")
+            .unwrap()
+            .unwrap()
+            .dyn_into::<CanvasRenderingContext2d>()
+            .unwrap();
+        let game_of_life: GameOfLife = GameOfLife::from_str(&GOL_GUN).unwrap();
+        Animator {
+            canvas,
+            ctx,
+            game_of_life,
+            last_frame_time: 0.0,
+            target_frame_time: 1000.0 / 5.0, // FPS
+        }
+    }
+
+    pub fn start(self) {
+        let animator = Rc::new(RefCell::new(self));
+
+        let f: Rc<RefCell<Option<Closure<dyn FnMut()>>>> = Rc::new(RefCell::new(None));
+        let g = f.clone();
+
+        *g.borrow_mut() = Some(Closure::wrap(Box::new(move || {
+            let mut anim = animator.borrow_mut();
+
+            let now = window().unwrap().performance().unwrap().now();
+            let elapsed = now - anim.last_frame_time;
+
+            if elapsed >= anim.target_frame_time {
+                anim.last_frame_time = now;
+
+                // Clear
+                anim.ctx.set_fill_style_str(&"#000");
+                anim.ctx.fill_rect(
+                    0.0,
+                    0.0,
+                    anim.canvas.width() as f64,
+                    anim.canvas.height() as f64,
+                );
+
+                // Draw moving rectangle
+                let (rows, cols) = anim.game_of_life.get_contents().get_size();
+                let cell_size_row: f64 = (anim.canvas.height() as f64) / (rows as f64);
+                let cell_size_column: f64 = (anim.canvas.width() as f64) / (cols as f64);
+                let cell_size = f64::min(cell_size_column, cell_size_row);
+                let all_cells = anim.game_of_life.get_contents().all_cells();
+                for cell in all_cells {
+                    let fill = match cell.value() {
+                        GolCell::Alive => &"#0f0",
+                        GolCell::Dead => &"#f00",
+                    };
+                    anim.ctx.set_fill_style_str(fill);
+                    anim.ctx.fill_rect(
+                        (cell.column() as f64) * cell_size,
+                        (cell.row() as f64) * cell_size,
+                        cell_size,
+                        cell_size,
+                    );
+                }
+
+                anim.game_of_life.iterate();
+            }
+
+            // Schedule next frame
+            window()
+                .unwrap()
+                .request_animation_frame(f.borrow().as_ref().unwrap().as_ref().unchecked_ref())
+                .unwrap();
+        }) as Box<dyn FnMut()>));
+
+        window()
+            .unwrap()
+            .request_animation_frame(g.borrow().as_ref().unwrap().as_ref().unchecked_ref())
+            .unwrap();
+    }
+}
 
 #[wasm_bindgen(start)]
 pub fn start() {
@@ -55,15 +177,9 @@ impl WasmGo {
     #[wasm_bindgen(constructor)]
     pub fn new(rows: usize, columns: usize) -> WasmGo {
         WasmGo {
-            inner: GoBoard::with_size(rows, columns), //inner: GoBoard::from_str(as_str).unwrap(),
+            inner: GoBoard::with_size(rows, columns),
         }
     }
-
-    /*
-    pub fn play(&mut self, x: usize, y: usize) -> bool {
-        self.inner.play(x, y)
-    }
-    */
 
     pub fn board(&self) -> String {
         self.inner.to_string()
