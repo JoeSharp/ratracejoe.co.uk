@@ -29,9 +29,11 @@ function GameOfLife() {
         I am making use of some Rust projects I wrote last year when trying to
         learn this masterful language.
       </p>
-      <a href="https://github.com/JoeSharp/rust-gaming">
-        Joe&apos;s Rust Gaming
-      </a>
+      <p>
+        <a href="https://github.com/JoeSharp/rust-gaming">
+          Joe&apos;s Rust Gaming
+        </a>
+      </p>
       <canvas
         ref={canvasRef}
         width={400}
