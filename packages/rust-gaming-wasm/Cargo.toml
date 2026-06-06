@@ -3,6 +3,10 @@ name = "rust-gaming-wasm"
 version = "0.1.0"
 edition = "2024"
 
+description = "A Rust → WASM canvas animation engine"
+repository = "https://github.com/JoeSharp/ratracejoe.co.uk"
+license = "UNLICENSED"
+
 [lib]
 crate-type = ["cdylib"]
 
