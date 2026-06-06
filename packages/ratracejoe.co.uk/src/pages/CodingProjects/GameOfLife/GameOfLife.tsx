@@ -24,6 +24,14 @@ function GameOfLife() {
   return (
     <div>
       <h1>Game of Life</h1>
+      <p>This shows how to draw to canvas from within WASM.</p>
+      <p>
+        I am making use of some Rust projects I wrote last year when trying to
+        learn this masterful language.
+      </p>
+      <a href="https://github.com/JoeSharp/rust-gaming">
+        Joe&apos;s Rust Gaming
+      </a>
       <canvas
         ref={canvasRef}
         width={400}

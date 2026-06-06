@@ -9,6 +9,20 @@ function DevDiary() {
         contents. So for now, I will record each step as I explore different
         things I can build and publish.
       </p>
+      <DevDiaryPost title="WASM Canvas" date={new Date("2026-06-06T08:00:00")}>
+        <p>
+          I now have my Game of Life simulator working via WASM. For my initial
+          WASM experiments, I was just using the WASM library as a data model
+          with computation. I started looking to wrap my 'Go' implementation but
+          then realised how many nonsensical wrapper structs I&apos;d need.
+          Since I do not want to pollute my original library with WASM bindings.
+        </p>
+        <p>
+          I used Copilot to get me through doing this another way, handing a
+          canvas to WASM and letting it do all the work. Today I just have Game
+          of Life going, since that requires no interaction. It is alive!
+        </p>
+      </DevDiaryPost>
 
       <DevDiaryPost title="WASM" date={new Date("2026-06-04T08:00:00")}>
         <p>
