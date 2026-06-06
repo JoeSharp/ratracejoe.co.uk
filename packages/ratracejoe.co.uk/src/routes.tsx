@@ -9,7 +9,7 @@ import OutreachLab from "./pages/CodingProjects/OutreachLab";
 import SdqAnalysis from "./pages/CodingProjects/SdqAnalysis";
 import SportsDay from "./pages/CodingProjects/SportsDay";
 import App from "./App";
-import GoBoard from "./pages/CodingProjects/GoBoard";
+import GoBoard from "./pages/CodingProjects/GoGame";
 import ExternalLinks from "./pages/ExternalLinks";
 import DevDiary from "./pages/DevDiary";
 
