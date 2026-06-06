@@ -2,6 +2,11 @@ use adventure_engine::AdventureState;
 use go::{GoBoard, LastMove};
 use wasm_bindgen::prelude::*;
 
+#[wasm_bindgen(start)]
+pub fn start() {
+    console_error_panic_hook::set_once();
+}
+
 #[wasm_bindgen]
 pub struct WasmAdventureEngine {
     state: AdventureState,
@@ -28,6 +33,7 @@ pub struct WasmGo {
 
 #[wasm_bindgen]
 pub enum WasmLastMove {
+    FirstMove,
     Ok,
     IllegalKo,
     IllegalSuicidal,
@@ -36,6 +42,7 @@ pub enum WasmLastMove {
 impl From<go::LastMove> for WasmLastMove {
     fn from(m: go::LastMove) -> Self {
         match m {
+            LastMove::FirstMove => WasmLastMove::FirstMove,
             LastMove::Ok => WasmLastMove::Ok,
             LastMove::IllegalKo => WasmLastMove::IllegalKo,
             LastMove::IllegalSuicidal => WasmLastMove::IllegalSuicidal,
@@ -46,20 +53,9 @@ impl From<go::LastMove> for WasmLastMove {
 #[wasm_bindgen]
 impl WasmGo {
     #[wasm_bindgen(constructor)]
-    pub fn new() -> WasmGo {
-        let as_str = r#"
-    turn=W
-last_move=ok
-capturesW=16
-capturesB=23
--W---
---W--
--B---
--B-b-
------
-        "#;
+    pub fn new(rows: usize, columns: usize) -> WasmGo {
         WasmGo {
-            inner: GoBoard::from_str(as_str).unwrap(),
+            inner: GoBoard::with_size(rows, columns), //inner: GoBoard::from_str(as_str).unwrap(),
         }
     }
 
