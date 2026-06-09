@@ -1,5 +1,8 @@
 import React from "react";
-import init, { Animator } from "@joe/rust-gaming-wasm";
+import init, {
+  type Animator,
+  create_game_of_life_engine,
+} from "@joe/rust-gaming-wasm";
 
 function GameOfLife() {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
@@ -9,7 +12,7 @@ function GameOfLife() {
 
     init().then(() => {
       if (canvasRef.current) {
-        animator = new Animator(canvasRef.current);
+        animator = create_game_of_life_engine(canvasRef.current);
         animator.start();
       }
     });

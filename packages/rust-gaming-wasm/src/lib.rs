@@ -21,19 +21,24 @@ pub fn draw_rect(canvas: HtmlCanvasElement) {
     ctx.fill_rect(10.0, 10.0, 100.0, 100.0);
 }
 
-#[wasm_bindgen]
-pub struct Animator {
-    canvas: HtmlCanvasElement,
-    ctx: CanvasRenderingContext2d,
-    game_of_life: GameOfLife,
-    last_frame_time: f64,
-    target_frame_time: f64,
+pub trait GameEngine {
+    fn setup(&mut self);
+    fn update(&mut self, dt: f64);
+    fn draw(&mut self, canvas: &HtmlCanvasElement, ctx: &CanvasRenderingContext2d);
 }
 
-#[wasm_bindgen]
-impl Animator {
-    #[wasm_bindgen(constructor)]
-    pub fn new(canvas: HtmlCanvasElement) -> Animator {
+pub struct GameOfLifeEngine {
+    game_of_life: Option<GameOfLife>,
+}
+
+impl GameOfLifeEngine {
+    fn new() -> GameOfLifeEngine {
+        GameOfLifeEngine { game_of_life: None }
+    }
+}
+
+impl GameEngine for GameOfLifeEngine {
+    fn setup(&mut self) {
         const GOL_GUN: &str = "---------------------------------------
 -------------------------x-------------
 -----------------------x-x-------------
@@ -46,23 +51,80 @@ impl Animator {
 -------------xx------------------------
 ---------------------------------------
 ";
+        self.game_of_life = match GameOfLife::from_str(&GOL_GUN) {
+            Ok(b) => Some(b),
+            Err(_) => None,
+        }
+    }
 
+    fn update(&mut self, _dt: f64) {
+        if let Some(g) = &mut self.game_of_life {
+            g.iterate();
+        }
+    }
+
+    fn draw(&mut self, canvas: &HtmlCanvasElement, ctx: &CanvasRenderingContext2d) {
+        if let Some(g) = &mut self.game_of_life {
+            let (rows, cols) = g.get_contents().get_size();
+            let cell_size_row: f64 = (canvas.height() as f64) / (rows as f64);
+            let cell_size_column: f64 = (canvas.width() as f64) / (cols as f64);
+            let cell_size = f64::min(cell_size_column, cell_size_row);
+            let all_cells = g.get_contents().all_cells();
+            for cell in all_cells {
+                let fill = match cell.value() {
+                    GolCell::Alive => &"#0f0",
+                    GolCell::Dead => &"#f00",
+                };
+                ctx.set_fill_style_str(fill);
+                ctx.fill_rect(
+                    (cell.column() as f64) * cell_size,
+                    (cell.row() as f64) * cell_size,
+                    cell_size,
+                    cell_size,
+                );
+            }
+        }
+    }
+}
+
+#[wasm_bindgen]
+pub struct Animator {
+    canvas: HtmlCanvasElement,
+    ctx: CanvasRenderingContext2d,
+    last_frame_time: f64,
+    target_frame_time: f64,
+    running: bool,
+    engine: Box<dyn GameEngine>,
+}
+
+#[wasm_bindgen]
+pub fn create_game_of_life_engine(canvas: HtmlCanvasElement) -> Animator {
+    let mut gol = GameOfLifeEngine::new();
+    gol.setup();
+    Animator::new(canvas, Box::new(gol))
+}
+
+impl Animator {
+    pub fn new(canvas: HtmlCanvasElement, engine: Box<dyn GameEngine>) -> Animator {
         let ctx = canvas
             .get_context("2d")
             .unwrap()
             .unwrap()
             .dyn_into::<CanvasRenderingContext2d>()
             .unwrap();
-        let game_of_life: GameOfLife = GameOfLife::from_str(&GOL_GUN).unwrap();
         Animator {
             canvas,
             ctx,
-            game_of_life,
+            engine,
             last_frame_time: 0.0,
             target_frame_time: 1000.0 / 5.0, // FPS
+            running: true,
         }
     }
+}
 
+#[wasm_bindgen]
+impl Animator {
     pub fn start(self) {
         let animator = Rc::new(RefCell::new(self));
 
@@ -71,6 +133,9 @@ impl Animator {
 
         *g.borrow_mut() = Some(Closure::wrap(Box::new(move || {
             let mut anim = animator.borrow_mut();
+            if !anim.running {
+                return;
+            }
 
             let now = window().unwrap().performance().unwrap().now();
             let elapsed = now - anim.last_frame_time;
@@ -87,27 +152,10 @@ impl Animator {
                     anim.canvas.height() as f64,
                 );
 
-                // Draw moving rectangle
-                let (rows, cols) = anim.game_of_life.get_contents().get_size();
-                let cell_size_row: f64 = (anim.canvas.height() as f64) / (rows as f64);
-                let cell_size_column: f64 = (anim.canvas.width() as f64) / (cols as f64);
-                let cell_size = f64::min(cell_size_column, cell_size_row);
-                let all_cells = anim.game_of_life.get_contents().all_cells();
-                for cell in all_cells {
-                    let fill = match cell.value() {
-                        GolCell::Alive => &"#0f0",
-                        GolCell::Dead => &"#f00",
-                    };
-                    anim.ctx.set_fill_style_str(fill);
-                    anim.ctx.fill_rect(
-                        (cell.column() as f64) * cell_size,
-                        (cell.row() as f64) * cell_size,
-                        cell_size,
-                        cell_size,
-                    );
-                }
-
-                anim.game_of_life.iterate();
+                anim.engine.update(elapsed);
+                let (canvas, ctx) = { (anim.canvas.clone(), anim.ctx.clone()) };
+                let engine = &mut anim.engine;
+                engine.draw(&canvas, &ctx);
             }
 
             // Schedule next frame
@@ -121,6 +169,10 @@ impl Animator {
             .unwrap()
             .request_animation_frame(g.borrow().as_ref().unwrap().as_ref().unchecked_ref())
             .unwrap();
+    }
+
+    pub fn free(&mut self) {
+        self.running = false;
     }
 }
 
