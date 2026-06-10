@@ -4,6 +4,7 @@ use game_of_life::GolCell;
 use go::{GoBoard, LastMove};
 use wasm_bindgen::JsCast;
 use wasm_bindgen::prelude::*;
+use web_sys::console;
 use web_sys::{CanvasRenderingContext2d, HtmlCanvasElement};
 
 #[wasm_bindgen]
@@ -26,12 +27,16 @@ pub trait GameEngine {
 }
 
 pub struct GameOfLifeEngine {
+    last_update_time: f64,
     game_of_life: Option<GameOfLife>,
 }
 
 impl GameOfLifeEngine {
     fn new() -> GameOfLifeEngine {
-        GameOfLifeEngine { game_of_life: None }
+        GameOfLifeEngine {
+            game_of_life: None,
+            last_update_time: 0.0,
+        }
     }
 }
 
@@ -56,9 +61,15 @@ impl GameEngine for GameOfLifeEngine {
     }
 
     fn update(&mut self, _dt: f64) {
+        self.last_update_time += _dt;
+        if self.last_update_time < 1000.0 / 5.0 {
+            return;
+        }
+
         if let Some(g) = &mut self.game_of_life {
             g.iterate();
         }
+        self.last_update_time = 0.0;
     }
 
     fn draw(&mut self, canvas: &HtmlCanvasElement, ctx: &CanvasRenderingContext2d) {
@@ -106,6 +117,7 @@ impl GameOfLifeHandle {
         let mut engine = GameOfLifeEngine::new();
         engine.setup();
 
+        console::log_1(&"Creating New Game of Life Handle".into());
         GameOfLifeHandle {
             canvas,
             ctx,

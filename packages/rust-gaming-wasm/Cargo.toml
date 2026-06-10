@@ -19,6 +19,7 @@ game-of-life = { path = "../../external/rust-gaming/game-of-life" }
 adventure-engine = { path = "../../external/rust-gaming/adventure-engine" }
 
 web-sys = { version = "0.3", features = [
+    "console",
     "Window",
     "Document",
     "HtmlCanvasElement",
