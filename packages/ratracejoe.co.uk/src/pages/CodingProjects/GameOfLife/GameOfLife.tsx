@@ -1,27 +1,32 @@
 import React from "react";
-import init, {
-  type Animator,
-  create_game_of_life_engine,
-} from "@joe/rust-gaming-wasm";
+import init, { GameOfLifeHandle } from "@joe/rust-gaming-wasm";
 
 function GameOfLife() {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
   React.useEffect(() => {
-    let animator: Animator;
-
     init().then(() => {
       if (canvasRef.current) {
-        animator = create_game_of_life_engine(canvasRef.current);
-        animator.start();
+        const handle = new GameOfLifeHandle(canvasRef.current);
+        let running = true;
+        let last = performance.now();
+
+        function loop(now: number) {
+          if (!running) return;
+          const dt = now - last;
+          last = now;
+          handle.update(dt);
+          handle.draw();
+          requestAnimationFrame(loop);
+        }
+
+        requestAnimationFrame(loop);
+
+        return () => {
+          running = false; // stops the loop
+        };
       }
     });
-
-    return () => {
-      if (animator) {
-        animator.free();
-      }
-    };
   }, []);
 
   return (

@@ -2,11 +2,9 @@ use adventure_engine::AdventureState;
 use game_of_life::GameOfLife;
 use game_of_life::GolCell;
 use go::{GoBoard, LastMove};
-use std::cell::RefCell;
-use std::rc::Rc;
 use wasm_bindgen::JsCast;
 use wasm_bindgen::prelude::*;
-use web_sys::{CanvasRenderingContext2d, HtmlCanvasElement, window};
+use web_sys::{CanvasRenderingContext2d, HtmlCanvasElement};
 
 #[wasm_bindgen]
 pub fn draw_rect(canvas: HtmlCanvasElement) {
@@ -88,97 +86,40 @@ impl GameEngine for GameOfLifeEngine {
 }
 
 #[wasm_bindgen]
-pub struct Animator {
+pub struct GameOfLifeHandle {
     canvas: HtmlCanvasElement,
     ctx: CanvasRenderingContext2d,
-    last_frame_time: f64,
-    target_frame_time: f64,
-    running: bool,
-    engine: Box<dyn GameEngine>,
+    engine: GameOfLifeEngine,
 }
 
 #[wasm_bindgen]
-pub fn create_game_of_life_engine(canvas: HtmlCanvasElement) -> Animator {
-    let mut gol = GameOfLifeEngine::new();
-    gol.setup();
-    Animator::new(canvas, Box::new(gol))
-}
-
-impl Animator {
-    pub fn new(canvas: HtmlCanvasElement, engine: Box<dyn GameEngine>) -> Animator {
+impl GameOfLifeHandle {
+    #[wasm_bindgen(constructor)]
+    pub fn new(canvas: HtmlCanvasElement) -> GameOfLifeHandle {
         let ctx = canvas
             .get_context("2d")
             .unwrap()
             .unwrap()
             .dyn_into::<CanvasRenderingContext2d>()
             .unwrap();
-        Animator {
+
+        let mut engine = GameOfLifeEngine::new();
+        engine.setup();
+
+        GameOfLifeHandle {
             canvas,
             ctx,
             engine,
-            last_frame_time: 0.0,
-            target_frame_time: 1000.0 / 5.0, // FPS
-            running: true,
         }
     }
-}
 
-#[wasm_bindgen]
-impl Animator {
-    pub fn start(self) {
-        let animator = Rc::new(RefCell::new(self));
-
-        let f: Rc<RefCell<Option<Closure<dyn FnMut()>>>> = Rc::new(RefCell::new(None));
-        let g = f.clone();
-
-        *g.borrow_mut() = Some(Closure::wrap(Box::new(move || {
-            let mut anim = animator.borrow_mut();
-            if !anim.running {
-                return;
-            }
-
-            let now = window().unwrap().performance().unwrap().now();
-            let elapsed = now - anim.last_frame_time;
-
-            if elapsed >= anim.target_frame_time {
-                anim.last_frame_time = now;
-
-                // Clear
-                anim.ctx.set_fill_style_str(&"#000");
-                anim.ctx.fill_rect(
-                    0.0,
-                    0.0,
-                    anim.canvas.width() as f64,
-                    anim.canvas.height() as f64,
-                );
-
-                anim.engine.update(elapsed);
-                let (canvas, ctx) = { (anim.canvas.clone(), anim.ctx.clone()) };
-                let engine = &mut anim.engine;
-                engine.draw(&canvas, &ctx);
-            }
-
-            // Schedule next frame
-            window()
-                .unwrap()
-                .request_animation_frame(f.borrow().as_ref().unwrap().as_ref().unchecked_ref())
-                .unwrap();
-        }) as Box<dyn FnMut()>));
-
-        window()
-            .unwrap()
-            .request_animation_frame(g.borrow().as_ref().unwrap().as_ref().unchecked_ref())
-            .unwrap();
+    pub fn update(&mut self, dt: f64) {
+        self.engine.update(dt);
     }
 
-    pub fn free(&mut self) {
-        self.running = false;
+    pub fn draw(&mut self) {
+        self.engine.draw(&self.canvas, &self.ctx);
     }
-}
-
-#[wasm_bindgen(start)]
-pub fn start() {
-    console_error_panic_hook::set_once();
 }
 
 #[wasm_bindgen]
