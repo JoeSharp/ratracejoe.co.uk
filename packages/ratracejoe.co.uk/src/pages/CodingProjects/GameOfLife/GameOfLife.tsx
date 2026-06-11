@@ -7,23 +7,42 @@ function GameOfLife() {
   React.useEffect(() => {
     init().then(() => {
       if (canvasRef.current) {
-        const handle = new GameOfLifeHandle(canvasRef.current);
-        let running = true;
+        const gameRef = new GameOfLifeHandle(canvasRef.current);
         let last = performance.now();
+        let running = true;
+
+        function onClickCanvas(e: MouseEvent) {
+          if (!canvasRef.current) return;
+          if (!gameRef) return;
+
+          const rect = canvasRef.current.getBoundingClientRect();
+
+          // Convert from client coords → canvas pixel coords
+          const x =
+            (e.clientX - rect.left) * (canvasRef.current.width / rect.width);
+          const y =
+            (e.clientY - rect.top) * (canvasRef.current.height / rect.height);
+
+          gameRef.handle_click(x, y);
+        }
 
         function loop(now: number) {
           if (!running) return;
           const dt = now - last;
           last = now;
-          handle.update(dt);
-          handle.draw();
+          gameRef.update(dt);
+          gameRef.draw();
           requestAnimationFrame(loop);
         }
 
         requestAnimationFrame(loop);
+        canvasRef.current.addEventListener("click", onClickCanvas);
 
         return () => {
-          running = false; // stops the loop
+          running = false;
+          if (canvasRef.current) {
+            canvasRef.current.removeEventListener("click", onClickCanvas);
+          }
         };
       }
     });
@@ -47,6 +66,7 @@ function GameOfLife() {
         width={400}
         height={400}
         style={{ border: "1px solid black" }}
+        //onClick={onClickCanvas}
       />
     </div>
   );
