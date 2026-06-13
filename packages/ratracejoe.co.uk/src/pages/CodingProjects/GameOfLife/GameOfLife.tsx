@@ -5,47 +5,73 @@ function GameOfLife() {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
   React.useEffect(() => {
+    let running = true;
+    let dragging = false;
+    let gameRef: GameOfLifeHandle | null = null;
+    let last = performance.now();
+
+    function onMouseDown() {
+      dragging = true;
+    }
+    function onMouseUp() {
+      dragging = false;
+    }
+    function onMouseLeave() {
+      dragging = false;
+    }
+
+    function onClickCanvas(e: MouseEvent) {
+      if (!canvasRef.current || !gameRef) return;
+
+      const rect = canvasRef.current.getBoundingClientRect();
+      const x =
+        (e.clientX - rect.left) * (canvasRef.current.width / rect.width);
+      const y =
+        (e.clientY - rect.top) * (canvasRef.current.height / rect.height);
+
+      gameRef.handle_click(x, y);
+    }
+
+    function onDrag(e: MouseEvent) {
+      if (dragging) onClickCanvas(e);
+    }
+
+    function loop(now: number) {
+      if (!running || !gameRef) return;
+      const dt = now - last;
+      last = now;
+      gameRef.update(dt);
+      gameRef.draw();
+      requestAnimationFrame(loop);
+    }
+
+    // async init
     init().then(() => {
-      if (canvasRef.current) {
-        const gameRef = new GameOfLifeHandle(canvasRef.current);
-        let last = performance.now();
-        let running = true;
+      if (!canvasRef.current) return;
 
-        function onClickCanvas(e: MouseEvent) {
-          if (!canvasRef.current) return;
-          if (!gameRef) return;
+      gameRef = new GameOfLifeHandle(canvasRef.current);
 
-          const rect = canvasRef.current.getBoundingClientRect();
+      canvasRef.current.addEventListener("click", onClickCanvas);
+      canvasRef.current.addEventListener("mousedown", onMouseDown);
+      canvasRef.current.addEventListener("mouseup", onMouseUp);
+      canvasRef.current.addEventListener("mouseleave", onMouseLeave);
+      canvasRef.current.addEventListener("mousemove", onDrag);
 
-          // Convert from client coords → canvas pixel coords
-          const x =
-            (e.clientX - rect.left) * (canvasRef.current.width / rect.width);
-          const y =
-            (e.clientY - rect.top) * (canvasRef.current.height / rect.height);
-
-          gameRef.handle_click(x, y);
-        }
-
-        function loop(now: number) {
-          if (!running) return;
-          const dt = now - last;
-          last = now;
-          gameRef.update(dt);
-          gameRef.draw();
-          requestAnimationFrame(loop);
-        }
-
-        requestAnimationFrame(loop);
-        canvasRef.current.addEventListener("click", onClickCanvas);
-
-        return () => {
-          running = false;
-          if (canvasRef.current) {
-            canvasRef.current.removeEventListener("click", onClickCanvas);
-          }
-        };
-      }
+      requestAnimationFrame(loop);
     });
+
+    // CLEANUP — returned synchronously
+    return () => {
+      running = false;
+
+      if (canvasRef.current) {
+        canvasRef.current.removeEventListener("click", onClickCanvas);
+        canvasRef.current.removeEventListener("mousedown", onMouseDown);
+        canvasRef.current.removeEventListener("mouseup", onMouseUp);
+        canvasRef.current.removeEventListener("mouseleave", onMouseLeave);
+        canvasRef.current.removeEventListener("mousemove", onDrag);
+      }
+    };
   }, []);
 
   return (

@@ -56,6 +56,8 @@ impl GameEngine for GameOfLifeEngine {
             let cell_size_row: f64 = (canvas.height() as f64) / (rows as f64);
             let cell_size_column: f64 = (canvas.width() as f64) / (columns as f64);
             self.cell_size = f64::min(cell_size_column, cell_size_row);
+            let dimension = usize::max(rows, columns);
+            gol.expand_in_place(dimension, dimension);
         }
     }
 
@@ -72,20 +74,38 @@ impl GameEngine for GameOfLifeEngine {
     }
 
     fn draw(&self, _canvas: &HtmlCanvasElement, ctx: &CanvasRenderingContext2d) {
+        const ALIVE_FILL: &str = &"#00449f";
+        const ALIVE_OUTLINE: &str = &"#4df3ff";
+        ctx.set_stroke_style_str(ALIVE_OUTLINE);
+        ctx.set_fill_style_str(ALIVE_FILL);
+
         if let Some(g) = &self.game_of_life {
             let all_cells = g.get_contents().all_cells();
             for cell in all_cells {
-                let fill = match cell.value() {
-                    GolCell::Alive => &"#0f0",
-                    GolCell::Dead => &"#f00",
-                };
-                ctx.set_fill_style_str(fill);
-                ctx.fill_rect(
-                    (cell.column() as f64) * self.cell_size,
-                    (cell.row() as f64) * self.cell_size,
-                    self.cell_size,
-                    self.cell_size,
-                );
+                match cell.value() {
+                    GolCell::Alive => {
+                        ctx.fill_rect(
+                            (cell.column() as f64) * self.cell_size,
+                            (cell.row() as f64) * self.cell_size,
+                            self.cell_size,
+                            self.cell_size,
+                        );
+                        ctx.stroke_rect(
+                            (cell.column() as f64) * self.cell_size,
+                            (cell.row() as f64) * self.cell_size,
+                            self.cell_size,
+                            self.cell_size,
+                        );
+                    }
+                    GolCell::Dead => {
+                        ctx.clear_rect(
+                            (cell.column() as f64) * self.cell_size,
+                            (cell.row() as f64) * self.cell_size,
+                            self.cell_size,
+                            self.cell_size,
+                        );
+                    }
+                }
             }
         }
     }
