@@ -71,8 +71,8 @@ impl GameEngine for GameOfLifeEngine {
         self.last_update_time = 0.0;
     }
 
-    fn draw(&mut self, _canvas: &HtmlCanvasElement, ctx: &CanvasRenderingContext2d) {
-        if let Some(g) = &mut self.game_of_life {
+    fn draw(&self, _canvas: &HtmlCanvasElement, ctx: &CanvasRenderingContext2d) {
+        if let Some(g) = &self.game_of_life {
             let all_cells = g.get_contents().all_cells();
             for cell in all_cells {
                 let fill = match cell.value() {
@@ -129,7 +129,7 @@ impl GameOfLifeHandle {
         self.engine.update(dt);
     }
 
-    pub fn draw(&mut self) {
+    pub fn draw(&self) {
         self.engine.draw(&self.canvas, &self.ctx);
     }
 

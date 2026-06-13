@@ -8,5 +8,5 @@ mod simple_rect;
 pub trait GameEngine {
     fn setup(&mut self, canvas: &HtmlCanvasElement);
     fn update(&mut self, dt: f64);
-    fn draw(&mut self, canvas: &HtmlCanvasElement, ctx: &CanvasRenderingContext2d);
+    fn draw(&self, canvas: &HtmlCanvasElement, ctx: &CanvasRenderingContext2d);
 }
