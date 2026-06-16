@@ -1,5 +1,5 @@
 import React from "react";
-import init, { Dimensions, GoEngine } from "@joe/rust-gaming-wasm";
+import { Dimensions, GoEngine } from "@joe/rust-gaming-wasm";
 
 type Props = {
   dimensions: Dimensions;
