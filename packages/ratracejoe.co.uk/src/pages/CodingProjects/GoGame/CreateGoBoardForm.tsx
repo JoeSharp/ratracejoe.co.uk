@@ -1,34 +1,33 @@
 import React from "react";
-import type { WasmGo } from "@joe/rust-gaming-wasm";
-import createGoBoard from "../../../wasm/createGoBoard";
+import { Dimensions } from "@joe/rust-gaming-wasm";
 
 type Props = {
-  onCreate: (g: WasmGo) => void;
+  onCreate: (dimensions: Dimensions) => void;
 };
 
 function CreateGoBoardForm({ onCreate }: Props) {
-  const [rows, setRows] = React.useState<number>(5);
-  const [columns, setColumns] = React.useState<number>(5);
+  const [width, setWidth] = React.useState<number>(5);
+  const [height, setHeight] = React.useState<number>(5);
 
-  const onRowsChange: React.ChangeEventHandler<HTMLInputElement> = ({
+  const onWidthChange: React.ChangeEventHandler<HTMLInputElement> = ({
     target: { value },
-  }) => setRows(parseInt(value, 10));
-  const onColumnsChange: React.ChangeEventHandler<HTMLInputElement> = ({
+  }) => setWidth(parseInt(value, 10));
+  const onHeightChange: React.ChangeEventHandler<HTMLInputElement> = ({
     target: { value },
-  }) => setColumns(parseInt(value, 10));
+  }) => setHeight(parseInt(value, 10));
   const onSubmit: React.SubmitEventHandler = (e) => {
     e.preventDefault();
-    createGoBoard(rows, columns).then(onCreate);
+    onCreate(new Dimensions(width, height));
   };
 
   return (
     <form onSubmit={onSubmit}>
       <label>
-        Rows <input type="number" value={rows} onChange={onRowsChange} />
+        Rows <input type="number" value={width} onChange={onWidthChange} />
       </label>
       <label>
         Columns
-        <input type="number" value={columns} onChange={onColumnsChange} />
+        <input type="number" value={height} onChange={onHeightChange} />
       </label>
       <input type="submit" value="Create Board" />
     </form>

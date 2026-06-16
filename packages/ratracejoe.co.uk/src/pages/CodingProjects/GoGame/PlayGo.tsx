@@ -1,11 +1,26 @@
-import type { WasmGo } from "@joe/rust-gaming-wasm";
+import React from "react";
+import init, { Dimensions, GoEngine } from "@joe/rust-gaming-wasm";
 
 type Props = {
-  board: WasmGo;
+  dimensions: Dimensions;
 };
 
-function PlayGo({ board }: Props) {
-  return <div>{board.board()}</div>;
+function PlayGo({ dimensions }: Props) {
+  const canvasRef = React.useRef<HTMLCanvasElement>(null);
+
+  React.useEffect(() => {
+    if (!canvasRef.current) return;
+
+    let goEngine: GoEngine = new GoEngine(canvasRef.current, dimensions);
+
+    goEngine.draw();
+  }, [dimensions]);
+
+  return (
+    <div>
+      <canvas ref={canvasRef} width={400} height={400} />
+    </div>
+  );
 }
 
 export default PlayGo;

@@ -1,13 +1,19 @@
 import React from "react";
-import init, { GameOfLifeHandle } from "@joe/rust-gaming-wasm";
+import { GameOfLifeHandle } from "@joe/rust-gaming-wasm";
+import useRustGamingWasmInit from "../../../hooks/useRustGamingWasmInit";
 
 function GameOfLife() {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
+  const wasmInitialised = useRustGamingWasmInit();
 
   React.useEffect(() => {
+    console.log("Use effect", wasmInitialised);
+    if (!wasmInitialised) return;
+    if (!canvasRef.current) return;
+
     let running = true;
     let dragging = false;
-    let gameRef: GameOfLifeHandle | null = null;
+    let gameRef: GameOfLifeHandle = new GameOfLifeHandle(canvasRef.current);
     let last = performance.now();
 
     function onMouseDown() {
@@ -46,19 +52,13 @@ function GameOfLife() {
     }
 
     // async init
-    init().then(() => {
-      if (!canvasRef.current) return;
+    canvasRef.current.addEventListener("click", onClickCanvas);
+    canvasRef.current.addEventListener("mousedown", onMouseDown);
+    canvasRef.current.addEventListener("mouseup", onMouseUp);
+    canvasRef.current.addEventListener("mouseleave", onMouseLeave);
+    canvasRef.current.addEventListener("mousemove", onDrag);
 
-      gameRef = new GameOfLifeHandle(canvasRef.current);
-
-      canvasRef.current.addEventListener("click", onClickCanvas);
-      canvasRef.current.addEventListener("mousedown", onMouseDown);
-      canvasRef.current.addEventListener("mouseup", onMouseUp);
-      canvasRef.current.addEventListener("mouseleave", onMouseLeave);
-      canvasRef.current.addEventListener("mousemove", onDrag);
-
-      requestAnimationFrame(loop);
-    });
+    requestAnimationFrame(loop);
 
     // CLEANUP — returned synchronously
     return () => {
@@ -72,7 +72,7 @@ function GameOfLife() {
         canvasRef.current.removeEventListener("mousemove", onDrag);
       }
     };
-  }, []);
+  }, [wasmInitialised]);
 
   return (
     <div>
@@ -92,7 +92,6 @@ function GameOfLife() {
         width={400}
         height={400}
         style={{ border: "1px solid black" }}
-        //onClick={onClickCanvas}
       />
     </div>
   );

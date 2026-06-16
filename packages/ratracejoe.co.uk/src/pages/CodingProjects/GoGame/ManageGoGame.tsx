@@ -1,16 +1,20 @@
 import React from "react";
-import type { WasmGo } from "@joe/rust-gaming-wasm";
+import { type Dimensions } from "@joe/rust-gaming-wasm";
 import CreateGoBoardForm from "./CreateGoBoardForm";
 import PlayGo from "./PlayGo";
+import useRustGamingWasmInit from "../../../hooks/useRustGamingWasmInit";
 
 function ManageGoGame() {
-  const [board, setBoard] = React.useState<WasmGo>();
+  const [dimensions, setDimensions] = React.useState<Dimensions>();
+  const wasmInitialised = useRustGamingWasmInit();
+
+  if (!wasmInitialised) return null;
 
   return (
     <div>
       <h2>Go Board</h2>
-      <CreateGoBoardForm onCreate={setBoard} />
-      {board && <PlayGo board={board} />}
+      <CreateGoBoardForm onCreate={setDimensions} />
+      {dimensions && <PlayGo dimensions={dimensions} />}
     </div>
   );
 }
