@@ -13,6 +13,7 @@ import App from "./App";
 import GoBoard from "./pages/CodingProjects/GoGame";
 import ExternalLinks from "./pages/ExternalLinks";
 import DevDiary from "./pages/DevDiary";
+import { WasmProvider } from "./context/WasmContext";
 
 export type NAV_SECTION =
   | "Home"
@@ -29,7 +30,11 @@ export type NavHandle = {
 export const ROUTES: RouteObject[] = [
   {
     path: "/",
-    element: <App />,
+    element: (
+      <WasmProvider>
+        <App />
+      </WasmProvider>
+    ),
     children: [
       {
         index: true,

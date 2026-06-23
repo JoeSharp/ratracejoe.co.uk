@@ -2,11 +2,11 @@ import React from "react";
 import { type Dimensions } from "@joe/rust-gaming-wasm";
 import CreateGoBoardForm from "./CreateGoBoardForm";
 import PlayGo from "./PlayGo";
-import useRustGamingWasmInit from "../../../hooks/useRustGamingWasmInit";
+import { useWasmInitialised } from "../../../context/WasmContext";
 
 function ManageGoGame() {
   const [dimensions, setDimensions] = React.useState<Dimensions>();
-  const wasmInitialised = useRustGamingWasmInit();
+  const wasmInitialised = useWasmInitialised();
 
   if (!wasmInitialised) return null;
 

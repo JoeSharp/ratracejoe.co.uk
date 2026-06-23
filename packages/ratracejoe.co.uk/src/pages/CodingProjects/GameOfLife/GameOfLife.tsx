@@ -1,13 +1,12 @@
 import React from "react";
 import { GameOfLifeHandle } from "@joe/rust-gaming-wasm";
-import useRustGamingWasmInit from "../../../hooks/useRustGamingWasmInit";
+import { useWasmInitialised } from "../../../context/WasmContext";
 
 function GameOfLife() {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
-  const wasmInitialised = useRustGamingWasmInit();
+  const wasmInitialised = useWasmInitialised();
 
   React.useEffect(() => {
-    console.log("Use effect", wasmInitialised);
     if (!wasmInitialised) return;
     if (!canvasRef.current) return;
 

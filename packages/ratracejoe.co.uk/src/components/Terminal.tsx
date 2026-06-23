@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { WasmAdventureEngine } from "@joe/rust-gaming-wasm";
-import getEngine from "../wasm/getAdventureEngine";
+import getAdventureEngineSingleton from "../wasm/getAdventureEngineSingleton";
 
 export function Terminal() {
   const [lines, setLines] = useState<string[]>([
@@ -16,7 +16,7 @@ export function Terminal() {
   }) => setInput(value);
 
   useEffect(() => {
-    getEngine().then((e) => {
+    getAdventureEngineSingleton().then((e) => {
       engineRef.current = e;
     });
   });
