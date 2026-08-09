@@ -1,0 +1,76 @@
+@font-face {
+    font-family: Pokemon-Solid;
+    src: url(./fonts/Pokemon-Solid.ttf);
+}
+
+@font-face {
+    font-family: Pokemon-Hollow;
+    src: url(./fonts/Pokemon-Hollow.ttf);
+}
+
+.zookimon-container {
+    font-family: Pokemon-Solid;
+    color: black;
+}
+
+.zookimon-container h1 {
+    padding: 2rem;
+}
+
+.zookimon {
+    border-radius: 1rem;
+    border: solid thick black;
+    background-color: white;
+    width: 20rem;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin: 1rem;
+    padding: 1rem;
+}
+
+.zookimon__details {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.image-stack {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    position: relative;
+}
+
+.image-stack__item img {
+    height: 300px;
+    max-width: 300px;
+    border-radius: 0.5rem;
+}
+
+.image-stack__item--top {
+    grid-column: 1;
+    grid-row: 1;
+    z-index: 1;
+}
+
+.image-stack__item--bottom {
+    grid-column: 1;
+    grid-row: 1;
+    z-index: 2;
+}
+
+.zookimon__name {
+    padding: 0.7rem;
+    font-size: x-large;
+}
+
+.zookimon__description {
+    padding: 0.7rem;
+    font-size: larger;
+    font-style: italic;
+}
+
+.zookimon__stat td {
+    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+    padding: 0.7rem;
+}

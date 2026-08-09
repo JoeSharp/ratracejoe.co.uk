@@ -9,6 +9,7 @@ import OutreachLab from "./pages/CodingProjects/OutreachLab";
 import SdqAnalysis from "./pages/CodingProjects/SdqAnalysis";
 import GameOfLife from "./pages/CodingProjects/GameOfLife";
 import SportsDay from "./pages/CodingProjects/SportsDay";
+import LegoTopTrumps from "./pages/CodingProjects/LegoTopTrumps/LegoTopTrumps";
 import App from "./App";
 import GoBoard from "./pages/CodingProjects/GoGame";
 import ExternalLinks from "./pages/ExternalLinks";
@@ -81,6 +82,10 @@ export const ROUTES: RouteObject[] = [
           {
             path: "go-board",
             element: <GoBoard />,
+          },
+          {
+            path: "lego-top-trumps",
+            element: <LegoTopTrumps />,
           },
         ],
       },

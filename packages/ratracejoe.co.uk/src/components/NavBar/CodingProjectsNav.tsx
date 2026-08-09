@@ -45,6 +45,11 @@ function CodingProjectsNav({
             Sports Day
           </Link>
         </li>
+        <li>
+          <Link to="/coding-projects/lego-top-trumps" onClick={onClose}>
+            Lego Top Trumps
+          </Link>
+        </li>
       </ul>
     </nav>
   );

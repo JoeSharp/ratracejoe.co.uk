@@ -1,0 +1,39 @@
+.top-trump {
+  border-radius: 1rem;
+  border: solid thick black;
+  background-color: white;
+  width: 24rem;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+.top-trump__details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.top-trump__image {
+  border-radius: 0.5rem;
+  height: 300px;
+  max-width: 180px;
+}
+
+.top-trump__name {
+  padding: 0.7rem;
+  font-size: x-large;
+}
+
+.top-trump__description {
+  padding: 0.7rem;
+  font-size: larger;
+  font-style: italic;
+}
+
+.top-trump__stat td {
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  padding: 0.7rem;
+}

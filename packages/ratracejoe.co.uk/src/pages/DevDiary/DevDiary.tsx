@@ -9,6 +9,12 @@ function DevDiary() {
         contents. So for now, I will record each step as I explore different
         things I can build and publish.
       </p>
+      <DevDiaryPost title="Outreach Lab" date={new Date("2026-08-09T08:00:00")}>
+        <p>
+          I have finally gotten the outreach lab to where I wanted it. Full
+          HTTPS access, using custom sub domains. Developer tools installed.
+        </p>
+      </DevDiaryPost>
       <DevDiaryPost title="WASM Canvas" date={new Date("2026-06-06T08:00:00")}>
         <p>
           I now have my Game of Life simulator working via WASM. For my initial
