@@ -17,7 +17,7 @@ function OutreachLab() {
         This should allow me to do much more complex and realistic work with
         students.
       </p>
-      <a href="https://github.com/JoeSharp/outreach-lab">GitHub Repository</a>
+      <a href="https://github.com/JoeSharp/outreach-lab" target="_blank">GitHub Repository</a>
     </div>
   );
 }
